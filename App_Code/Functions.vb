@@ -28,6 +28,27 @@ Public Class Functions
         cn.Close()
     End Sub
 
+    Public Shared Sub DeleteReg(Tablename As String, FieldID As String, ID As Integer, Username As String)
+        Dim sCN As String = ConfigurationManager.ConnectionStrings("ColegioCN").ConnectionString
+        Dim sDelete As String =
+            " UPDATE " & Tablename & _
+            " SET DELETE_ = '*'" & _
+            "    ,UPDATE_ = GETDATE() " & _
+            "    ,USERID_ = '" & Trim(Username) & "' " & _
+            " WHERE " & FieldID & " = " & ID
+
+        ' Conexión SQL Server
+        Dim cn As SqlConnection = New SqlConnection(sCN)
+        Dim cmd As SqlCommand
+
+        cn.Open()
+
+        cmd = New SqlCommand(sDelete, cn)
+        cmd.ExecuteNonQuery()
+
+        cn.Close()
+    End Sub
+
     Public Shared Function Images(ByVal Gallery As String, ByVal CatID As Integer) As Integer
         Dim iReturn As Integer = 0
         Dim sCN As String = ConfigurationManager.ConnectionStrings("ColegioCN").ConnectionString

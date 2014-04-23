@@ -30,6 +30,7 @@ Partial Class Forms_MAudiovisual
                 If Request.QueryString("Mode") IsNot Nothing Then
                     If UCase(Request.QueryString("Mode")) = "VIEW" Then
                         Call Functions.FormViewMode(Page)
+                        Call FormUploadImage(False)
                         btnSave.Visible = False
                         btnDelete.Visible = False
                     End If
@@ -61,6 +62,13 @@ Partial Class Forms_MAudiovisual
 
         txtID.CssClass = "read_only"
 
+    End Sub
+
+    Private Sub FormUploadImage(State As Boolean)
+        lblUploadFile.Visible = State
+        fileUpload.Visible = State
+        lblTituloImagen.Visible = State
+        txtImageTitle.Visible = State
     End Sub
 
     Private Sub LoadValues(ByVal ID As String)
@@ -124,9 +132,37 @@ Partial Class Forms_MAudiovisual
             txtDigitador.Text = Trim(dsDocumentos("USERID_"))
             txtDigFecha.Text = Trim(dsDocumentos("UPDATE_"))
 
+            Call LoadImages(txtID.Text, "DOCUMENTO")
+
         End While
 
         cn.Close()
+    End Sub
+
+    Private Sub LoadImages(sID As String, Gallery As String)
+        Dim sQuery As String = "SELECT img_id, img_cat_id, img_nombre, img_url " & _
+                               "FROM galeria " & _
+                               "WHERE img_galeria = '" & Gallery & "' " & _
+                               "  AND img_cat_id = " & sID
+
+        ' Conexión SQL Server
+        Dim cn As SqlConnection = New SqlConnection(sCN)
+        Dim cmd As SqlCommand = New SqlCommand(sQuery, cn)
+        Dim dsImgFotografias As SqlDataReader
+
+        ' Abrir conexión
+        cn.Open()
+
+        dsImgFotografias = cmd.ExecuteReader
+
+        imgFotografias.Width = 0
+        imgFotografias.Height = 0
+
+        While dsImgFotografias.Read
+            imgFotografias.ImageUrl = dsImgFotografias("img_url")
+            imgFotografias.Width = 300
+            imgFotografias.Height = 300
+        End While
     End Sub
 
     Private Sub LoadLists()
@@ -461,5 +497,43 @@ Partial Class Forms_MAudiovisual
         End If
 
         cn.Close()
+    End Sub
+
+    Protected Sub btnUpload_Click(sender As Object, e As EventArgs) Handles btnUpload.Click
+        Dim sExt As String
+        Dim sName As String
+        Dim sNewName As String
+        Dim sPath As String
+
+        imgUpload.Width = 0
+        imgUpload.Height = 0
+        imgUpload.ImageUrl = ""
+
+        If fileUpload.HasFile Then
+            sName = fileUpload.FileName
+            sExt = Path.GetExtension(sName)
+            If Functions.ValExtension(sExt) Then
+                If txtID.Text = "Nuevo" Then
+                    Call SaveDocumentos()
+                End If
+
+                sPath = "~/Gallery/Documentos/"
+                sNewName = sPath & Guid.NewGuid().ToString() & "." & sExt
+
+                fileUpload.SaveAs(MapPath(sNewName))
+                imgUpload.Width = 300
+
+                imgUpload.Height = 300
+                imgUpload.ImageUrl = sNewName
+
+                Functions.AddImageGallery("DOCUMENTO", CInt(txtID.Text), IIf(txtImageTitle.Text.Trim <> "", txtImageTitle.Text, sName), sNewName)
+
+                lblErrUpload.Text = "Archivo cargado correctamente."
+            Else
+                lblErrUpload.Text = "El archivo no es de tipo imagen."
+            End If
+        Else
+            lblErrUpload.Text = "Seleccione el archivo que desea subir."
+        End If
     End Sub
 End Class

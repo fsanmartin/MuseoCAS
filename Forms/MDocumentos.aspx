@@ -7,7 +7,10 @@
             height: 32px;
         }
         .textbox {}
-    </style>
+        .auto-style2 {
+            height: 30px;
+        }
+        </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cpMainContent" Runat="Server">
     <link type="text/css"rel="stylesheet"
@@ -356,6 +359,38 @@
                 &nbsp;</td>
         </tr>
         <tr>
+            <td colspan="2">
+                <asp:Label ID="lblUploadFile" runat="server" CssClass="Labels" Text="Cargar imágenes:"></asp:Label>
+            </td>
+            <td colspan="4">
+                <asp:FileUpload ID="fileUpload" runat="server" Width="356px" CssClass="textbox" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <asp:Label ID="lblTituloImagen" runat="server" CssClass="Labels" Text="Título para la imagen:"></asp:Label>
+            </td>
+            <td colspan="4">
+                <asp:TextBox ID="txtImageTitle" runat="server" CssClass="textbox" MaxLength="200" Width="282px"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="auto-style2"></td>
+            <td colspan="2" class="auto-style2">
+                <asp:Button ID="btnUpload" runat="server" Text="Subir Imagen" Width="107px" />
+            </td>
+            <td colspan="2" class="auto-style2">
+                <asp:Label ID="lblErrUpload" runat="server" CssClass="LabelsError"></asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+            <td colspan="4">
+                <asp:Image ID="imgUpload" runat="server" />
+                <asp:Image ID="imgFotografias" runat="server" />
+            </td>
+        </tr>
+        <tr>
             <td colspan="6">
                 &nbsp;</td>
         </tr>
@@ -374,7 +409,7 @@
                 <asp:ImageButton ID="btnEdit" runat="server" ImageUrl="~/Icons/edit_32.png" ToolTip="Modificar registro" />
             </td>
             <td colspan="2">
-                <asp:ImageButton ID="btnDelete" runat="server" ImageUrl="~/Icons/delete_32.png" ToolTip="Eliminar registro" />
+                <asp:ImageButton ID="btnDelete" runat="server" ImageUrl="~/Icons/delete_32.png" ToolTip="Eliminar registro" OnClientClick="return confirm('¿Esta seguro de eliminar este registro?');" />
             </td>
             <td>
                 &nbsp;</td>

@@ -37,20 +37,25 @@
                         <Columns>
                             <asp:TemplateField ShowHeader="False">
                                 <ItemTemplate>
-                                    <asp:ImageButton ID="btnEdit" runat="server" CausesValidation="false" CommandName="btnEdit" ImageUrl="~/Icons/edit.png" Text="Botón" CommandArgument='<%# Container.DataItemIndex %>' />
+                                    <asp:ImageButton ID="btnEdit" runat="server" CausesValidation="false" CommandName="btnEdit" ImageUrl="~/Icons/edit.png" CommandArgument='<%# Container.DataItemIndex %>' />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField ShowHeader="False">
+                                <ItemTemplate>
+                                    <asp:ImageButton ID="btnImage" runat="server" CausesValidation="false" CommandName="btnImage" ImageUrl="~/Icons/photo.png" Text="Imagen" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:BoundField DataField="doc_id" HeaderText="doc_id" InsertVisible="False" ReadOnly="True" SortExpression="doc_id" Visible="False" />
                             <asp:TemplateField HeaderText="Título" SortExpression="doc_titulo">
                                 <ItemTemplate>
-                                    <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# Eval("doc_id", "MDocumentos.aspx?ID={0}") %>' Text='<%# Eval("doc_titulo") %>'></asp:HyperLink>
+                                    <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# Eval("doc_id", "MDocumentos.aspx?ID={0}&Mode=View")%>' Text='<%# Eval("doc_titulo") %>'></asp:HyperLink>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:BoundField DataField="doc_numero" HeaderText="Número" SortExpression="doc_numero" />
                             <asp:BoundField DataField="doc_resp_nombre" HeaderText="Responsable" SortExpression="doc_resp_nombre" />
                             <asp:TemplateField ShowHeader="False">
                                 <ItemTemplate>
-                                    <asp:ImageButton ID="btnDelete" runat="server" CausesValidation="false" CommandName="btnDelete" ImageUrl="~/Icons/delete.png" Text="Botón" />
+                                    <asp:ImageButton ID="btnDelete" runat="server" CausesValidation="false" OnClientClick="return confirm('¿Esta seguro de eliminar este registro?');" CommandName="btnDelete" ImageUrl="~/Icons/delete.png" CommandArgument='<%# Container.DataItemIndex%>' />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>

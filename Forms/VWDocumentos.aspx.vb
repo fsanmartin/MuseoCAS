@@ -14,6 +14,13 @@ Partial Class Forms_frmVWAudiovisual
             Dim regID As String = GridView1.DataKeys(index).Value
 
             Response.Redirect("MDocumentos.aspx?ID=" & regID)
+        ElseIf e.CommandName = "btnDelete" Then
+            Dim index As Integer = Convert.ToInt32(e.CommandArgument)
+            Dim regID As String = GridView1.DataKeys(index).Value
+
+            Call Functions.DeleteReg("documentos", "doc_id", regID, User.Identity.Name)
+
+            Response.Redirect("VWDocumentos.aspx")
         End If
     End Sub
 
@@ -29,6 +36,9 @@ Partial Class Forms_frmVWAudiovisual
         Dim permDocumentos As New Permisos(User.Identity.Name, "MDocumentos.aspx")
 
         If e.Row.RowType = DataControlRowType.DataRow Then
+            Dim btnImage As ImageButton = CType(e.Row.FindControl("btnImage"), ImageButton)
+            btnImage.Enabled = False
+
             If Not permDocumentos.PermisoModificar Then
                 Dim btnEdit As ImageButton = CType(e.Row.FindControl("btnEdit"), ImageButton)
                 btnEdit.Visible = False
@@ -38,6 +48,11 @@ Partial Class Forms_frmVWAudiovisual
                 Dim btnDelete As ImageButton = CType(e.Row.FindControl("btnDelete"), ImageButton)
                 btnDelete.Visible = False
             End If
+
+            If Functions.Images("DOCUMENTO", GridView1.DataKeys(e.Row.RowIndex).Value) = 0 Then
+                btnImage.Visible = False
+            End If
+
         End If
     End Sub
 
