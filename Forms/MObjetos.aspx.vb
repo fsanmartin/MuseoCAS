@@ -157,6 +157,8 @@ Partial Class Forms_MObjetos
             imgObjetos.Width = 300
             imgObjetos.Height = 300
         End While
+
+        cn.Close()
     End Sub
 
     Private Sub LoadLists()

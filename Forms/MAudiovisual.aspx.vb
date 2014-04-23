@@ -163,6 +163,8 @@ Partial Class Forms_MAudiovisual
             imgAudiovisual.Width = 300
             imgAudiovisual.Height = 300
         End While
+
+        cn.Close()
     End Sub
 
     Private Sub LoadLists()

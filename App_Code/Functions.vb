@@ -72,6 +72,8 @@ Public Class Functions
             iReturn = dsImages("images")
         End While
 
+        cn.Close()
+
         Return iReturn
     End Function
 
@@ -148,6 +150,8 @@ Public Class Functions
             sNextVal = dsNext("conteo")
             sNextVal = sNextVal.PadLeft(Length, "0")
         End While
+
+        cn.Close()
 
         Return sNextVal
     End Function

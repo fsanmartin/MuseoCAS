@@ -162,6 +162,8 @@ Partial Class Forms_MFotografias
             imgFotografias.Width = 300
             imgFotografias.Height = 300
         End While
+
+        cn.Close()
     End Sub
 
     Private Sub LoadLists()
