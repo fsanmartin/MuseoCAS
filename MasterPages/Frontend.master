@@ -90,8 +90,6 @@
 <body>
     <asp:SiteMapDataSource id="nav1" runat="server" />
     <form id="form1" runat="server">
-        <p>
-            &nbsp;</p>
     <div id="PageWrapper">
       <header><a href="/" style="text-align: right"></a></header>
       <nav>
@@ -100,8 +98,7 @@
                   <td><asp:SiteMapPath runat="server" ID="SiteMapPath1" />
                   </td>
                   <td style="text-align: right">Hola <b><asp:LoginName ID="LoginName1" runat="server" /></b>
-&nbsp;<a href="/" style="text-align: right"><asp:LoginStatus ID="LoginStatus1" runat="server" LogoutAction="RedirectToLoginPage" LogoutPageUrl="/Login.aspx" />
-            </a>
+&nbsp;<asp:Button ID="btnQuit" runat="server" CommandName="btnQuit" Text="Cerrar Sesión" />
                   </td>
               </tr>
           </table>
@@ -118,10 +115,10 @@
             <asp:ListItem>Otro</asp:ListItem>
         </asp:DropDownList>
           <br /><br />
-        <%--Menu--%>
+          <%--Menu--%>
         <div id="menu12">
             <ul>
-        <% 
+                <% 
             Dim arMenu As ArrayList = Functions.ReturnMenu(HttpContext.Current.User.Identity.Name)
             Dim i As Integer
             Dim sMainMenu As String = ""
@@ -144,7 +141,7 @@
         %>
             </ul>
         </div>
-        <%------- FIN MENU -------%>
+          <%------- FIN MENU -------%>
       </aside>
       <footer>Footer, si se requiere</footer>
     </div>

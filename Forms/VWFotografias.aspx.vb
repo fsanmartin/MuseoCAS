@@ -14,6 +14,13 @@ Partial Class Forms_frmVWFotografias
             Dim regID As String = GridView1.DataKeys(index).Value
 
             Response.Redirect("MFotografias.aspx?ID=" & regID)
+        ElseIf e.CommandName = "btnDelete" Then
+            Dim index As Integer = Convert.ToInt32(e.CommandArgument)
+            Dim regID As String = GridView1.DataKeys(index).Value
+
+            Call Functions.DeleteReg("fotografia", "fot_id", regID, User.Identity.Name)
+
+            Response.Redirect("VWFotografias.aspx")
         End If
     End Sub
 

@@ -10,6 +10,7 @@ Partial Class Forms_MCodigos
     Dim dFechaResp As Date
     Dim permCodigos As Permisos
     Dim iID As Integer
+    Dim sReturn As String
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
         permCodigos = New Permisos(User.Identity.Name, System.IO.Path.GetFileName(Request.Url.LocalPath))
@@ -43,6 +44,10 @@ Partial Class Forms_MCodigos
                 End If
             End If
         Else
+            If Request.QueryString("List") IsNot Nothing Then
+                sReturn = Request.QueryString("List")
+                cboTabla.SelectedValue = sReturn
+            End If
             If permCodigos.PermisoAgregar Then
                 If txtID.Text = "" Then
                     txtID.Text = "Nuevo"
@@ -83,7 +88,7 @@ Partial Class Forms_MCodigos
         While dsCodigos.Read
             txtID.Text = dsCodigos("cod_id")
             cboTabla.SelectedValue = dsCodigos("cod_cod")
-            txtValor.Text = dsCodigos("cod_val")
+            txtValor.Text = Trim(dsCodigos("cod_val"))
             txtDigitador.Text = Trim(dsCodigos("USERID_"))
             txtDigFecha.Text = Trim(dsCodigos("UPDATE_"))
         End While
@@ -92,7 +97,7 @@ Partial Class Forms_MCodigos
     End Sub
 
     Private Sub LoadLists()
-        Dim sQueryCodigos As String = "SELECT cod_cod, cod_val FROM codigos WHERE cod_name = '%COD_NAME%' AND DELETE_ <> '*'"
+        Dim sQueryCodigos As String = "SELECT rtrim(cod_cod) as cod_cod, rtrim(cod_val) as cod_val FROM codigos WHERE cod_name = '%COD_NAME%' AND DELETE_ <> '*'"
         ' -------------------------
         ' Maestro de Tablas de Códigos
         Dim dsTabla As New SqlDataSource(sCN, Replace(sQueryCodigos, "%COD_NAME%", "__TABLES"))
@@ -181,5 +186,9 @@ Partial Class Forms_MCodigos
         End If
 
         cn.Close()
+    End Sub
+
+    Protected Sub btnVolver_Click(sender As Object, e As ImageClickEventArgs) Handles btnVolver.Click
+        Response.Redirect("VWCodigos.aspx?List=" & cboTabla.SelectedValue)
     End Sub
 End Class

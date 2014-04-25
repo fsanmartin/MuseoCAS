@@ -2,10 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style type="text/css">
-        .auto-style3 {
-            width: 32px;
-            height: 32px;
-        }
         .textbox {}
     </style>
 </asp:Content>
@@ -28,12 +24,12 @@
         });
     </script> 
 
-    <h1>Tabla de Códigos Generalizados</h1>
+    <h1>&nbsp;<asp:ImageButton ID="btnVolver" runat="server" CommandName="btnVolver" ImageUrl="~/Icons/return_32.png" />
+&nbsp;Tabla de Códigos Generalizados</h1>
     <table id="tblAdministracion">
         <tr>
             <td colspan="6" style="text-align: right">
-                <a href="VWCodigos.aspx"><img alt="Volver" class="auto-style3" src="../Icons/return_32.png" /></a>
-            </td>
+                &nbsp;</td>
         </tr>
         <tr>
             <td colspan="6">
@@ -103,7 +99,7 @@
                 <asp:ImageButton ID="btnEdit" runat="server" ImageUrl="~/Icons/edit_32.png" ToolTip="Modificar registro" />
             </td>
             <td colspan="2">
-                <asp:ImageButton ID="btnDelete" runat="server" ImageUrl="~/Icons/delete_32.png" ToolTip="Eliminar registro" />
+                <asp:ImageButton ID="btnDelete" runat="server" ImageUrl="~/Icons/delete_32.png" ToolTip="Eliminar registro" OnClientClick="return confirm('¿Esta seguro de eliminar este registro?');" />
             </td>
             <td>
                 &nbsp;</td>

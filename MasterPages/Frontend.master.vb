@@ -30,8 +30,9 @@ Partial Class MasterPageAdmin
         End If
     End Sub
 
-    Protected Sub LoginStatus1_LoggingOut(sender As Object, e As LoginCancelEventArgs) Handles LoginStatus1.LoggingOut
-        Response.Redirect("/Login.aspx")
+    Protected Sub btnQuit_Click(sender As Object, e As EventArgs) Handles btnQuit.Click
+        FormsAuthentication.SignOut()
+        FormsAuthentication.RedirectToLoginPage()
     End Sub
 End Class
 

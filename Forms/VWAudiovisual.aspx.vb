@@ -14,6 +14,13 @@ Partial Class Forms_frmVWAudiovisual
             Dim regID As String = GridView1.DataKeys(index).Value
 
             Response.Redirect("MAudiovisual.aspx?ID=" & regID)
+        ElseIf e.CommandName = "btnDelete" Then
+            Dim index As Integer = Convert.ToInt32(e.CommandArgument)
+            Dim regID As String = GridView1.DataKeys(index).Value
+
+            Call Functions.DeleteReg("audiovisual", "adv_id", regID, User.Identity.Name)
+
+            Response.Redirect("VWAudiovisual.aspx")
         End If
     End Sub
 

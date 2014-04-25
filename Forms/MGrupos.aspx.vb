@@ -163,15 +163,15 @@ Partial Class Forms_MGrupos
                     " VALUES( '" & Trim(txtGrupo.Text) & "', " & _
                             "'" & Trim(txtDesc.Text) & "', " & _
                             "' ', " & _
-                            "'" & Format(Date.Now, "yyyy-MM-dd HH:mm:ss") & "', " & _
-                            "'" & Format(Date.Now, "yyyy-MM-dd HH:mm:ss") & "', " & _
+                            "GETDATE(), " & _
+                            "GETDATE(), " & _
                             "'" & Trim(User.Identity.Name) & "'" & _
                             ") "
 
         Dim sUpdateGrupo As String = "UPDATE grupos " & _
                "SET grp_name = '" & Trim(txtGrupo.Text) & "'" & _
                "   ,grp_desc = '" & Trim(txtDesc.Text) & "'" & _
-               "   ,UPDATE_ = '" & Format(Date.Now, "yyyy-MM-dd HH:mm:ss") & "'" & _
+               "   ,UPDATE_ = GETDATE() " & _
                "   ,USERID_ = '" & Trim(User.Identity.Name) & "' " & _
              "WHERE grp_id = " & txtID.Text
 
@@ -211,7 +211,7 @@ Partial Class Forms_MGrupos
     Protected Sub btnDelete_Click(sender As Object, e As ImageClickEventArgs) Handles btnDelete.Click
         Dim sUpdateGrupo As String = "UPDATE grupos " & _
                        "SET DELETE_ = '*' " & _
-                       "   ,UPDATE_ = '" & Format(Date.Now, "yyyy-MM-dd HH:mm:ss") & "'" & _
+                       "   ,UPDATE_ = GETDATE() " & _
                        "   ,USERID_ = '" & Trim(User.Identity.Name) & "' " & _
                        "WHERE grp_id = " & txtID.Text
 

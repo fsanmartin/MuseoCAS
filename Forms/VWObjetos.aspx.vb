@@ -14,6 +14,13 @@ Partial Class Forms_frmVWObjetos
             Dim regID As String = GridView1.DataKeys(index).Value
 
             Response.Redirect("MObjetos.aspx?ID=" & regID)
+        ElseIf e.CommandName = "btnDelete" Then
+            Dim index As Integer = Convert.ToInt32(e.CommandArgument)
+            Dim regID As String = GridView1.DataKeys(index).Value
+
+            Call Functions.DeleteReg("objetos", "obj_id", regID, User.Identity.Name)
+
+            Response.Redirect("VWObjetos.aspx")
         End If
     End Sub
 
