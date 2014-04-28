@@ -127,37 +127,39 @@ Partial Class Forms_MObjetos
             txtDigitador.Text = Trim(dsObjetos("USERID_"))
             txtDigFecha.Text = Trim(dsObjetos("UPDATE_"))
 
-            Call LoadImages(txtID.Text, "OBJETOS")
+            'Call LoadImages(txtID.Text, "OBJETOS")
         End While
 
         cn.Close()
     End Sub
 
-    Private Sub LoadImages(sID As String, Gallery As String)
-        Dim sQuery As String = "SELECT img_id, img_cat_id, img_nombre, img_url " & _
-                               "FROM galeria " & _
-                               "WHERE img_galeria = '" & Gallery & "' " & _
-                               "  AND img_cat_id = " & sID
+    'Private Sub LoadImages(sID As String, Gallery As String)
+    '    Dim sQuery As String = "SELECT img_id, img_cat_id, img_nombre, img_url " & _
+    '                           "FROM galeria " & _
+    '                           "WHERE img_galeria = '" & Gallery & "' " & _
+    '                           "  AND img_cat_id = " & sID
 
-        ' Conexión SQL Server
-        Dim cn As SqlConnection = New SqlConnection(sCN)
-        Dim cmd As SqlCommand = New SqlCommand(sQuery, cn)
-        Dim dsImgObjetos As SqlDataReader
+    '    ' Conexión SQL Server
+    '    Dim cn As SqlConnection = New SqlConnection(sCN)
+    '    Dim cmd As SqlCommand = New SqlCommand(sQuery, cn)
+    '    Dim dsImgObjetos As SqlDataReader
 
-        ' Abrir conexión
-        cn.Open()
+    '    ' Abrir conexión
+    '    cn.Open()
 
-        dsImgObjetos = cmd.ExecuteReader
+    '    dsImgObjetos = cmd.ExecuteReader
 
-        imgObjetos.Width = 0
-        imgObjetos.Height = 0
+    '    imgObjetos.Width = 0
+    '    imgObjetos.Height = 0
 
-        While dsImgObjetos.Read
-            imgObjetos.ImageUrl = dsImgObjetos("img_url")
-            imgObjetos.Width = 300
-            imgObjetos.Height = 300
-        End While
-    End Sub
+    '    While dsImgObjetos.Read
+    '        imgObjetos.ImageUrl = dsImgObjetos("img_url")
+    '        imgObjetos.Width = 300
+    '        imgObjetos.Height = 300
+    '    End While
+
+    '    cn.Close()
+    'End Sub
 
     Private Sub LoadLists()
         Dim sQueryDeposito As String = "SELECT dep_id, dep_name FROM deposito WHERE DELETE_ <> '*'"

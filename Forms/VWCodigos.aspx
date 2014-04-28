@@ -12,8 +12,9 @@
             <td>
                 <asp:Label ID="Label2" runat="server" CssClass="Labels" Text="Ingresar Nuevo:"></asp:Label>
             </td>
-            <td>
-                <a href="MCodigos.aspx"><img src="../Icons/new.png" style="width: 24px; height: 24px" /></a></td>
+            <td> 
+                <asp:ImageButton ID="btnNew" runat="server" CommandName="btnNew" ImageUrl="~/Icons/new.png" />
+            </td>
         </tr>
         <tr>
             <td>
@@ -47,7 +48,7 @@
             </asp:TemplateField>
             <asp:TemplateField ShowHeader="False">
                 <ItemTemplate>
-                    <asp:ImageButton ID="ImageButton1" runat="server" CausesValidation="False" CommandName="Delete" ImageUrl="~/Icons/delete.png" Text="Eliminar" />
+                    <asp:ImageButton ID="ImageButton1" runat="server" CausesValidation="False" OnClientClick="return confirm('¿Esta seguro de eliminar este registro?');" CommandName="Delete" ImageUrl="~/Icons/delete.png" Text="Eliminar" />
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>

@@ -132,37 +132,9 @@ Partial Class Forms_MAudiovisual
             txtRespFecha.Text = Trim(dsAudiovisual("adv_resp_fecha"))
             txtDigitador.Text = Trim(dsAudiovisual("USERID_"))
             txtDigFecha.Text = Trim(dsAudiovisual("UPDATE_"))
-
-            Call LoadImages(txtID.Text, "AUDIOVISUAL")
         End While
 
         cn.Close()
-    End Sub
-
-    Private Sub LoadImages(sID As String, Gallery As String)
-        Dim sQuery As String = "SELECT img_id, img_cat_id, img_nombre, img_url " & _
-                               "FROM galeria " & _
-                               "WHERE img_galeria = '" & Gallery & "' " & _
-                               "  AND img_cat_id = " & sID
-
-        ' Conexión SQL Server
-        Dim cn As SqlConnection = New SqlConnection(sCN)
-        Dim cmd As SqlCommand = New SqlCommand(sQuery, cn)
-        Dim dsImgAudiovisual As SqlDataReader
-
-        ' Abrir conexión
-        cn.Open()
-
-        dsImgAudiovisual = cmd.ExecuteReader
-
-        imgAudiovisual.Width = 0
-        imgAudiovisual.Height = 0
-
-        While dsImgAudiovisual.Read
-            imgAudiovisual.ImageUrl = dsImgAudiovisual("img_url")
-            imgAudiovisual.Width = 300
-            imgAudiovisual.Height = 300
-        End While
     End Sub
 
     Private Sub LoadLists()
@@ -341,7 +313,7 @@ Partial Class Forms_MAudiovisual
                 imgUpload.Height = 300
                 imgUpload.ImageUrl = sNewName
 
-                Functions.AddImageGallery("Audiovisual", CInt(txtID.Text), IIf(txtImageTitle.Text.Trim <> "", txtImageTitle.Text, sName), sNewName)
+                Functions.AddImageGallery("AUDIOVISUAL", CInt(txtID.Text), IIf(txtImageTitle.Text.Trim <> "", txtImageTitle.Text, sName), sNewName)
 
                 lblErrUpload.Text = "Archivo cargado correctamente."
             Else

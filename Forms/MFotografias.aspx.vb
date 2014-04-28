@@ -132,36 +132,9 @@ Partial Class Forms_MFotografias
             txtDigitador.Text = Trim(dsFotografias("USERID_"))
             txtDigFecha.Text = Trim(dsFotografias("UPDATE_"))
 
-            Call LoadImages(txtID.Text, "FOTOGRAFIA")
         End While
 
         cn.Close()
-    End Sub
-
-    Private Sub LoadImages(sID As String, Gallery As String)
-        Dim sQuery As String = "SELECT img_id, img_cat_id, img_nombre, img_url " & _
-                               "FROM galeria " & _
-                               "WHERE img_galeria = '" & Gallery & "' " & _
-                               "  AND img_cat_id = " & sID
-
-        ' Conexión SQL Server
-        Dim cn As SqlConnection = New SqlConnection(sCN)
-        Dim cmd As SqlCommand = New SqlCommand(sQuery, cn)
-        Dim dsImgFotografias As SqlDataReader
-
-        ' Abrir conexión
-        cn.Open()
-
-        dsImgFotografias = cmd.ExecuteReader
-
-        imgFotografias.Width = 0
-        imgFotografias.Height = 0
-
-        While dsImgFotografias.Read
-            imgFotografias.ImageUrl = dsImgFotografias("img_url")
-            imgFotografias.Width = 300
-            imgFotografias.Height = 300
-        End While
     End Sub
 
     Private Sub LoadLists()

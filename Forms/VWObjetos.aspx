@@ -59,7 +59,7 @@
                             <asp:BoundField DataField="USERID_" HeaderText="USERID_" SortExpression="USERID_" Visible="False" />
                             <asp:TemplateField ShowHeader="False">
                                 <ItemTemplate>
-                                    <asp:ImageButton ID="btnDelete" runat="server" CausesValidation="False" CommandName="Delete" ImageUrl="~/Icons/delete.png" Text="Eliminar" />
+                                    <asp:ImageButton ID="btnDelete" runat="server" CausesValidation="False" OnClientClick="return confirm('¿Esta seguro de eliminar este registro?');" CommandName="Delete" ImageUrl="~/Icons/delete.png" Text="Eliminar" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>

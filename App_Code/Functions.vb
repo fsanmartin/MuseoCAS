@@ -72,6 +72,8 @@ Public Class Functions
             iReturn = dsImages("images")
         End While
 
+        cn.Close()
+
         Return iReturn
     End Function
 
@@ -149,6 +151,8 @@ Public Class Functions
             sNextVal = sNextVal.PadLeft(Length, "0")
         End While
 
+        cn.Close()
+
         Return sNextVal
     End Function
 
@@ -167,11 +171,47 @@ Public Class Functions
             ElseIf (ctrl.GetType() Is GetType(Label)) Then
                 Dim lbl As Label = CType(ctrl, Label)
                 If lbl.Text = "*" Then lbl.Visible = False
+            ElseIf (ctrl.GetType() Is GetType(Button)) Then
+                Dim btn As Button = CType(ctrl, Button)
+                If btn.ID <> "btnQuit" Then
+                    btn.Visible = False
+                End If
             End If
             If ctrl.HasControls Then
                 Call FormViewMode(ctrl)
             End If
         Next
     End Sub
+
+    Public Shared Function LoadImages(sID As String, Gallery As String) As ArrayList
+        Dim sCN As String = ConfigurationManager.ConnectionStrings("ColegioCN").ConnectionString
+        Dim sImage(2) As String
+        Dim arImagesOutput As New ArrayList
+        Dim sQuery As String = "SELECT img_id, img_cat_id, img_nombre, img_url " & _
+                               "FROM galeria " & _
+                               "WHERE img_galeria = '" & Gallery & "' " & _
+                               "  AND img_cat_id = " & sID
+
+        ' Conexión SQL Server
+        Dim cn As SqlConnection = New SqlConnection(sCN)
+        Dim cmd As SqlCommand = New SqlCommand(sQuery, cn)
+        Dim dsImages As SqlDataReader
+
+        ' Abrir conexión
+        cn.Open()
+
+        dsImages = cmd.ExecuteReader
+
+        While dsImages.Read
+            ReDim sImage(2)
+            sImage(0) = dsImages("img_url")
+            sImage(1) = dsImages("img_nombre")
+            arImagesOutput.Add(sImage)
+        End While
+
+        cn.Close()
+
+        Return arImagesOutput
+    End Function
 
 End Class

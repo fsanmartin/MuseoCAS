@@ -9,6 +9,17 @@
             width: 32px;
             height: 32px;
         }
+        .auto-style4 {
+            border: 1px solid #808080;
+            width: 100%;
+            letter-spacing: -1pt;
+            color: #363636;
+            font-size: xx-small;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            top: 1295px;
+            left: 13px;
+            height: 50px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cpMainContent" Runat="Server">
@@ -30,12 +41,12 @@
         });
     </script> 
 
-    <h1>Ficha para Colección Audiovisual</h1>
+    <h1>
+                <a href="VWAudiovisual.aspx"><img alt="Volver" class="auto-style3" src="../Icons/return_32.png" /></a>&nbsp; Ficha para Colección Audiovisual</h1>
     <table id="tblAdministracion">
         <tr>
             <td colspan="6" style="text-align: right">
-                <a href="VWAudiovisual.aspx"><img alt="Volver" class="auto-style3" src="../Icons/return_32.png" /></a>
-            </td>
+                &nbsp;</td>
         </tr>
         <tr>
             <td colspan="6">
@@ -364,7 +375,49 @@
         </tr>
         <tr>
             <td colspan="6">
-                &nbsp;</td>
+                <table class="auto-style4">
+<%  Dim arImages As New ArrayList
+    Dim iPhoto As Integer = 1
+    Dim i As Integer
+    Dim iAlto As Integer
+    Dim iAncho As Integer
+    Dim iFactorAlto As Integer = 120
+    Dim sImg As String()
+    Dim imgImage As System.Drawing.Image
+    
+    If txtID.Text <> "Nuevo" Then
+        arImages = Functions.LoadImages(Trim(txtID.Text), "AUDIOVISUAL")
+        If arImages.Count > 0 Then
+            For i = 0 To arImages.Count - 1
+                sImg = CType(arImages.Item(i), String())
+                
+                imgImage = System.Drawing.Image.FromFile(Server.MapPath(sImg(0)))
+                If imgImage.Width > imgImage.Height Then
+                    iAncho = CType(imgImage.Width / imgImage.Height * iFactorAlto, Integer)
+                    iAlto = iFactorAlto
+                Else
+                    iAlto = CType(imgImage.Height / imgImage.Width * iFactorAlto, Integer)
+                    iAncho = iFactorAlto
+                End If
+                
+                If iPhoto = 1 Then%>
+                    <tr>
+<%              End If%>
+<%--                        <td><asp:Image runat="server" AlternateText="<%Response.Write(sImg(1))%>" ImageUrl="<%Response.Write(sImg(0))%>"/></td>--%>
+                        <td class="auto-style4">
+                            <img src="<%Response.Write(Mid(sImg(0), 2, Len(sImg(0))))%>" alt="<%Response.Write(sImg(0))%>" width="<%Response.Write(iAncho)%>" height="<%Response.Write(iAlto)%>" />
+                            <table><tr><td><%Response.Write(sImg(1))%></td></tr></table>
+                        </td>
+<%              If iPhoto = 3 Then%>
+                    </tr>
+<%                  iPhoto = 0 %>
+<%              End If%>
+<%              iPhoto = iPhoto + 1
+            Next i
+        End If%>
+<%  End If%>
+                </table>
+            </td>
         </tr>
         <tr>
             <td colspan="2">&nbsp;</td>
@@ -381,7 +434,7 @@
                 <asp:ImageButton ID="btnEdit" runat="server" ImageUrl="~/Icons/edit_32.png" ToolTip="Modificar registro" />
             </td>
             <td colspan="2">
-                <asp:ImageButton ID="btnDelete" runat="server" ImageUrl="~/Icons/delete_32.png" ToolTip="Eliminar registro" />
+                <asp:ImageButton ID="btnDelete" runat="server" ImageUrl="~/Icons/delete_32.png" ToolTip="Eliminar registro" OnClientClick="return confirm('¿Esta seguro de eliminar este registro?');" />
             </td>
             <td>
                 &nbsp;</td>
