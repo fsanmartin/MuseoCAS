@@ -126,7 +126,7 @@ Partial Class Forms_MCodigos
 
         cn.Close()
 
-        Response.Redirect("VWCodigos.aspx")
+        Response.Redirect("VWCodigos.aspx?List=" & cboTabla.SelectedValue)
     End Sub
 
     'Protected Sub cvalRespFecha_ServerValidate(source As Object, args As ServerValidateEventArgs) Handles cvalRespFecha.ServerValidate
@@ -139,7 +139,7 @@ Partial Class Forms_MCodigos
 
     Protected Sub btnSave_Click(sender As Object, e As ImageClickEventArgs) Handles btnSave.Click
         Call SaveCodigos()
-        Response.Redirect("VWCodigos.aspx")
+        Response.Redirect("VWCodigos.aspx?List=" & cboTabla.SelectedValue)
     End Sub
 
     Protected Sub btnEdit_Click(sender As Object, e As ImageClickEventArgs) Handles btnEdit.Click

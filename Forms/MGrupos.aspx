@@ -19,8 +19,7 @@
         </tr>
         <tr>
             <td>
-                <asp:Label ID="lblID" runat="server" CssClass="Labels" Text="ID:"></asp:Label>
-            </td>
+                &nbsp;</td>
             <td>
                 <asp:TextBox ID="txtID" runat="server" CssClass="textbox" Width="69px" ReadOnly="True"></asp:TextBox>
             </td>
@@ -56,6 +55,29 @@
             <td>&nbsp;</td>
             <td colspan="3"><h3>Funcionalidad Acceso para Visualizar</h3></td>
             <td colspan="3" style="text-align: center"><h3>Acceso adicional</h3></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td colspan="3" style="text-align: center"><h4>Vistas</h4></td>
+            <td colspan="3">&nbsp</td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td colspan="3">
+                <asp:CheckBoxList ID="cblVW" runat="server">
+                </asp:CheckBoxList>
+            </td>
+            <td>
+                &nbsp;</td>
+            <td>
+                &nbsp;</td>
+            <td>
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td colspan="3" style="text-align: center"><h4>Formularios</h4></td>
+            <td colspan="3">&nbsp</td>
         </tr>
         <tr>
             <td>&nbsp;</td>

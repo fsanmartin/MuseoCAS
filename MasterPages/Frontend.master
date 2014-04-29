@@ -97,7 +97,7 @@
               <tr>
                   <td>&nbsp;</td>
                   <td style="text-align: right">Hola <b><asp:LoginName ID="LoginName1" runat="server" /></b>
-&nbsp;<asp:Button ID="btnQuit" runat="server" CommandName="btnQuit" Text="Cerrar Sesión" />
+&nbsp;<asp:Button ID="btnQuit" runat="server" CommandName="btnQuit" Text="Cerrar Sesión" UseSubmitBehavior="False" />
                   </td>
               </tr>
           </table>

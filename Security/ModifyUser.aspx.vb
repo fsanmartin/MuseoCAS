@@ -13,6 +13,8 @@ Partial Class Security_ModifyUser
 
         If IsPostBack Then
             bPostBack = True
+        Else
+            Call LoadList()
         End If
 
         If Request.QueryString.Get("ID") IsNot Nothing Then
@@ -50,6 +52,20 @@ Partial Class Security_ModifyUser
 
     End Sub
 
+    Private Sub LoadList()
+        Dim sQuery As String = "SELECT grp_id, grp_name FROM grupos "
+
+        ' -------------------------
+        ' CheckBoxList VIEW
+        Dim dsGrupo As New SqlDataSource(sCN, sQuery)
+
+        cblGrupos.DataSource = dsGrupo
+        cblGrupos.DataValueField = "grp_id"
+        cblGrupos.DataTextField = "grp_name"
+        cblGrupos.DataBind()
+        dsGrupo.Dispose()
+    End Sub
+
     Private Sub PasswordState(State As Boolean)
         PasswordLabel.Visible = State
         Password.Visible = State
@@ -62,7 +78,7 @@ Partial Class Security_ModifyUser
     Private Sub LoadValues(ByVal ID As String)
         Dim userKey As New Guid(ID)
         Dim User As MembershipUser = Membership.GetUser(userKey)
-        Dim sQuery As String = "SELECT * FROM usuarios_grupos WHERE username = '" & User.UserName & "'"
+        Dim sQuery As String = "SELECT g.grp_id AS grp_id, g.grp_name AS grp_name FROM GRUPOS g, USUARIOS_GRUPOS u WHERE g.grp_id = u.grp_id AND u.UserName = '" & User.UserName & "'"
 
         UserName.Text = User.UserName
         Email.Text = User.Email
@@ -78,8 +94,14 @@ Partial Class Security_ModifyUser
         dsGrupoUsuario = cmd.ExecuteReader
 
         While dsGrupoUsuario.Read
-            cboGrupo.SelectedValue = Trim(dsGrupoUsuario("grp_id"))
+            For Each itemView As ListItem In cblGrupos.Items
+                If dsGrupoUsuario("grp_id") = itemView.Value Then
+                    itemView.Selected = True
+                End If
+            Next
         End While
+
+        cn.Close()
     End Sub
 
     Protected Sub btnEdit_Click(sender As Object, e As ImageClickEventArgs) Handles btnEdit.Click
@@ -103,10 +125,12 @@ Partial Class Security_ModifyUser
 
         User.IsApproved = True
 
-        Dim sUpdateGrupo As String = _
-            "UPDATE usuarios_grupos " & _
-            "SET grp_id = " & cboGrupo.SelectedValue & _
-            "WHERE username = '" & User.UserName & "'"
+        Dim sDeleteGrupos As String = "DELETE FROM USUARIOS_GRUPOS WHERE username = '" & User.UserName & "'"
+        Dim sInsertGrupo As String = "INSERT INTO usuarios_grupos (grp_id, username) VALUES (%GRUPO%, '" & User.UserName & "')"
+        'Dim sUpdateGrupo As String = _
+        '    "UPDATE usuarios_grupos " & _
+        '    "SET grp_id = " & cboGrupo.SelectedValue & _
+        '    "WHERE username = '" & User.UserName & "'"
 
         ' Conexión SQL Server
         Dim cn As SqlConnection = New SqlConnection(sCN)
@@ -114,8 +138,15 @@ Partial Class Security_ModifyUser
 
         cn.Open()
 
-        cmd = New SqlCommand(sUpdateGrupo, cn)
+        cmd = New SqlCommand(sDeleteGrupos, cn)
         cmd.ExecuteNonQuery()
+
+        For Each itemGrupo As ListItem In cblGrupos.Items
+            If itemGrupo.Selected Then
+                cmd = New SqlCommand(Replace(sInsertGrupo, "%GRUPO%", itemGrupo.Value), cn)
+                cmd.ExecuteNonQuery()
+            End If
+        Next
 
         cn.Close()
 

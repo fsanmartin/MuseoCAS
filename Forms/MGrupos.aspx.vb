@@ -23,7 +23,7 @@ Partial Class Forms_MGrupos
 
         If Request.QueryString("Mode") IsNot Nothing Then
             If UCase(Request.QueryString("Mode")) = "VIEW" Then
-                Call FormViewMode(Page)
+                Call Functions.FormViewMode(Page)
                 btnSave.Visible = False
                 btnDelete.Visible = False
             End If
@@ -58,6 +58,12 @@ Partial Class Forms_MGrupos
         dsAccesos = cmd.ExecuteReader
 
         While dsAccesos.Read
+            For Each itemView As ListItem In cblVW.Items
+                If dsAccesos("func_id") = itemView.Value And _
+                   dsAccesos("perm_view") = "1" Then
+                    itemView.Selected = True
+                End If
+            Next
             For Each itemView As ListItem In cblView.Items
                 If dsAccesos("func_id") = itemView.Value And _
                    dsAccesos("perm_view") = "1" Then
@@ -90,7 +96,18 @@ Partial Class Forms_MGrupos
     End Sub
 
     Private Sub LoadLists()
-        Dim sQueryFunc As String = "SELECT func_id, %VAL% FROM funcionalidad WHERE DELETE_ <> '*'"
+        Dim sQueryFunc As String = "SELECT func_id, %VAL% FROM funcionalidad WHERE func_cod_cod = 'MNT' AND DELETE_ <> '*' ORDER BY func_title"
+        Dim sQueryFuncVW As String = "SELECT func_id, %VAL% FROM funcionalidad WHERE func_cod_cod = 'VW' AND DELETE_ <> '*' ORDER BY func_title"
+
+        ' -------------------------
+        ' CheckBoxList VIEW
+        Dim dsVW As New SqlDataSource(sCN, Replace(sQueryFuncVW, "%VAL%", "func_title"))
+
+        cblVW.DataSource = dsVW
+        cblVW.DataValueField = "func_id"
+        cblVW.DataTextField = "func_title"
+        cblVW.DataBind()
+        dsVW.Dispose()
 
         ' -------------------------
         ' CheckBoxList VIEW
@@ -132,24 +149,6 @@ Partial Class Forms_MGrupos
         cblDelete.DataBind()
         dsDelete.Dispose()
 
-    End Sub
-
-    Private Sub FormViewMode(ctrl As Control)
-        For Each ctrl In ctrl.Controls
-            If (ctrl.GetType() Is GetType(TextBox)) Then
-                Dim txt As TextBox = CType(ctrl, TextBox)
-                txt.ReadOnly = True
-            ElseIf (ctrl.GetType() Is GetType(DropDownList)) Then
-                Dim cbo As DropDownList = CType(ctrl, DropDownList)
-                cbo.Enabled = False
-            ElseIf (ctrl.GetType() Is GetType(CheckBoxList)) Then
-                Dim cbo As CheckBoxList = CType(ctrl, CheckBoxList)
-                cbo.Enabled = False
-            End If
-            If ctrl.HasControls Then
-                Call FormViewMode(ctrl)
-            End If
-        Next
     End Sub
 
     Protected Sub btnSave_Click(sender As Object, e As ImageClickEventArgs) Handles btnSave.Click
@@ -247,6 +246,18 @@ Partial Class Forms_MGrupos
 
         cn.Open()
 
+        For Each itemView As ListItem In cblVW.Items
+            Celda = {"0", "0", "0", "0"}
+
+            If itemView.Selected Then
+                Celda(0) = "1"
+            End If
+
+            'Console.WriteLine(itemView.Text & " -> " & Celda(0) & ", " & Celda(1) & ", " & Celda(2) & ", " & Celda(3) & ", ")
+            cmd = New SqlCommand(sInsertGrupoFunc & itemView.Value & ", " & Celda(0) & ", " & Celda(1) & ", " & Celda(2) & ", " & Celda(3) & ")", cn)
+            cmd.ExecuteNonQuery()
+        Next
+
         For Each itemView As ListItem In cblView.Items
             Celda = {"0", "0", "0", "0"}
 
@@ -273,10 +284,8 @@ Partial Class Forms_MGrupos
                 End If
             Next
 
-            'Console.WriteLine(itemView.Text & " -> " & Celda(0) & ", " & Celda(1) & ", " & Celda(2) & ", " & Celda(3) & ", ")
             cmd = New SqlCommand(sInsertGrupoFunc & itemView.Value & ", " & Celda(0) & ", " & Celda(1) & ", " & Celda(2) & ", " & Celda(3) & ")", cn)
             cmd.ExecuteNonQuery()
-
         Next
 
         cn.Close()

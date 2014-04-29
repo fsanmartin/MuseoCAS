@@ -14,13 +14,9 @@
             args.IsValid = (args.Value.length >= 6);
         }
     </script>
-    <h1>Maestro de Usuarios</h1>
+    <h1>
+            <a href="VWUsers.aspx"><img alt="Volver" class="auto-style3" src="../Icons/return_32.png" /></a>&nbsp; Maestro de Usuarios</h1>
     <table style="font-family:Verdana;font-size:100%;width:351px;">
-    <tr>
-        <td colspan="6" style="text-align: right">
-            <a href="VWUsers.aspx"><img alt="Volver" class="auto-style3" src="../Icons/return_32.png" /></a>
-        </td>
-    </tr>
     <tr>
         <td colspan="4" style="color:Red;">
             <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="LabelsError" HeaderText="Debe ingresar datos en los siguientes campos obligatorios:" />
@@ -65,15 +61,11 @@
     </tr>
     <tr>
         <td colspan="2">
-            <asp:Label ID="GrupoLabel" runat="server" AssociatedControlID="cboGrupo" CssClass="Labels">Grupo de acceso:</asp:Label>
+            <asp:Label ID="GrupoLabel" runat="server" AssociatedControlID="cblGrupos" CssClass="Labels">Grupo de acceso:</asp:Label>
         </td>
         <td colspan="2">
-            <asp:DropDownList ID="cboGrupo" runat="server" CssClass="textbox" DataSourceID="dsGrupos" DataTextField="grp_name" DataValueField="grp_id"></asp:DropDownList>
-            <asp:SqlDataSource ID="dsGrupos" runat="server" ConnectionString="<%$ ConnectionStrings:ColegioCN %>" SelectCommand="SELECT [grp_id], [grp_name] FROM [GRUPOS] WHERE ([DELETE_] &lt;&gt; @DELETE_)">
-                <SelectParameters>
-                    <asp:Parameter DefaultValue="*" Name="DELETE_" Type="String" />
-                </SelectParameters>
-            </asp:SqlDataSource>
+            <asp:CheckBoxList ID="cblGrupos" runat="server">
+            </asp:CheckBoxList>
         </td>
     </tr>
     <tr>

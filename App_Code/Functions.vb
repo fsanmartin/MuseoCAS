@@ -168,6 +168,9 @@ Public Class Functions
                     cbo.Enabled = False
                     cbo.CssClass = "read_only"
                 End If
+            ElseIf (ctrl.GetType() Is GetType(CheckBoxList)) Then
+                Dim cbo As CheckBoxList = CType(ctrl, CheckBoxList)
+                cbo.Enabled = False
             ElseIf (ctrl.GetType() Is GetType(Label)) Then
                 Dim lbl As Label = CType(ctrl, Label)
                 If lbl.Text = "*" Then lbl.Visible = False

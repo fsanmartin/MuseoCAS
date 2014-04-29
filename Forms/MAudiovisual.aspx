@@ -384,13 +384,17 @@
     Dim iFactorAlto As Integer = 120
     Dim sImg As String()
     Dim imgImage As System.Drawing.Image
+    Dim sPath As String
     
     If txtID.Text <> "Nuevo" Then
         arImages = Functions.LoadImages(Trim(txtID.Text), "AUDIOVISUAL")
         If arImages.Count > 0 Then
             For i = 0 To arImages.Count - 1
                 sImg = CType(arImages.Item(i), String())
-                
+
+                sPath = System.Configuration.ConfigurationManager.AppSettings("site") & Replace(sImg(0), "~", "")
+                imgImage = System.Drawing.Image.FromFile(Server.MapPath(sPath))
+
                 imgImage = System.Drawing.Image.FromFile(Server.MapPath(sImg(0)))
                 If imgImage.Width > imgImage.Height Then
                     iAncho = CType(imgImage.Width / imgImage.Height * iFactorAlto, Integer)
@@ -405,7 +409,7 @@
 <%              End If%>
 <%--                        <td><asp:Image runat="server" AlternateText="<%Response.Write(sImg(1))%>" ImageUrl="<%Response.Write(sImg(0))%>"/></td>--%>
                         <td class="auto-style4">
-                            <img src="<%Response.Write(Mid(sImg(0), 2, Len(sImg(0))))%>" alt="<%Response.Write(sImg(0))%>" width="<%Response.Write(iAncho)%>" height="<%Response.Write(iAlto)%>" />
+                            <img src="<%Response.Write(sPath)%>" alt="<%Response.Write(sImg(0))%>" width="<%Response.Write(iAncho)%>" height="<%Response.Write(iAlto)%>" />
                             <table><tr><td><%Response.Write(sImg(1))%></td></tr></table>
                         </td>
 <%              If iPhoto = 3 Then%>
