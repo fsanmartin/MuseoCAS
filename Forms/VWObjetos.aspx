@@ -51,7 +51,7 @@
                                     <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# Eval("obj_id", "MObjetos.aspx?ID={0}&Mode=View")%>' Text='<%# Eval("obj_titulo") %>'></asp:HyperLink>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField DataField="obj_numero" HeaderText="Número" SortExpression="obj_numero" />
+                            <asp:BoundField DataField="obj_numero" HeaderText="Código de Inventario" SortExpression="obj_numero" />
                             <asp:BoundField DataField="obj_resp_nombre" HeaderText="Responsable" SortExpression="obj_resp_nombre" />
                             <asp:BoundField DataField="DELETE_" HeaderText="DELETE_" SortExpression="DELETE_" Visible="False" />
                             <asp:BoundField DataField="INSERT_" HeaderText="INSERT_" SortExpression="INSERT_" Visible="False" />
@@ -75,7 +75,7 @@
                         <SortedDescendingHeaderStyle BackColor="#4870BE" />
                     </asp:GridView>
                     <asp:SqlDataSource ID="dsObjetos" runat="server" ConnectionString="<%$ ConnectionStrings:ColegioCN %>" 
-                        SelectCommand="SELECT [obj_id], [obj_numero], [obj_titulo], [obj_resp_nombre], [obj_resp_fecha], [DELETE_], [INSERT_], [UPDATE_], [USERID_] FROM [OBJETOS] WHERE (([DELETE_] &lt;&gt; @DELETE_) AND ([obj_titulo] LIKE '%' + @obj_titulo + '%' OR [obj_descripcion_fisica] LIKE '%' + @obj_descripcion_fisica + '%' OR [obj_observaciones] LIKE '%' + @obj_observaciones + '%')) ORDER BY [obj_titulo]" 
+                        SelectCommand="SELECT [obj_id], [obj_numero], [obj_titulo], [obj_resp_nombre], [obj_resp_fecha], [DELETE_], [INSERT_], [UPDATE_], [USERID_] FROM [OBJETOS] WHERE (([DELETE_] &lt;&gt; @DELETE_) AND ([obj_titulo] LIKE '%' + @obj_titulo + '%' OR [obj_descripcion_fisica] LIKE '%' + @obj_descripcion_fisica + '%' OR [obj_observaciones] LIKE '%' + @obj_observaciones + '%')) ORDER BY [obj_numero]" 
                         DeleteCommand="DELETE FROM [OBJETOS] WHERE [obj_id] = @obj_id" 
                         InsertCommand="INSERT INTO [OBJETOS] ([obj_numero], [obj_titulo], [obj_resp_nombre], [obj_resp_fecha], [DELETE_], [INSERT_], [UPDATE_], [USERID_]) VALUES (@obj_numero, @obj_titulo, @obj_resp_nombre, @obj_resp_fecha, @DELETE_, @INSERT_, @UPDATE_, @USERID_)" 
                         UpdateCommand="UPDATE [OBJETOS] SET [obj_numero] = @obj_numero, [obj_titulo] = @obj_titulo, [obj_resp_nombre] = @obj_resp_nombre, [obj_resp_fecha] = @obj_resp_fecha, [DELETE_] = @DELETE_, [INSERT_] = @INSERT_, [UPDATE_] = @UPDATE_, [USERID_] = @USERID_ WHERE [obj_id] = @obj_id">

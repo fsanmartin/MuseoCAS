@@ -51,7 +51,7 @@
                                     <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# Eval("doc_id", "MDocumentos.aspx?ID={0}&Mode=View")%>' Text='<%# Eval("doc_titulo") %>'></asp:HyperLink>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField DataField="doc_numero" HeaderText="Número" SortExpression="doc_numero" />
+                            <asp:BoundField DataField="doc_numero" HeaderText="Código de Inventario" SortExpression="doc_numero" />
                             <asp:BoundField DataField="doc_resp_nombre" HeaderText="Responsable" SortExpression="doc_resp_nombre" />
                             <asp:TemplateField ShowHeader="False">
                                 <ItemTemplate>
@@ -71,7 +71,7 @@
                         <SortedDescendingHeaderStyle BackColor="#4870BE" />
                     </asp:GridView>
                     <asp:SqlDataSource ID="dsDocumentos" runat="server" ConnectionString="<%$ ConnectionStrings:ColegioCN %>" 
-                        SelectCommand="SELECT * FROM [DOCUMENTOS] WHERE (([DELETE_] <> @DELETE_) AND ([doc_titulo] LIKE '%' + @doc_titulo + '%' OR [doc_descripcion_fisica] LIKE '%' + @doc_descripcion_fisica + '%' OR [doc_observaciones] LIKE '%' + @doc_observaciones + '%')) ORDER BY [doc_titulo]">
+                        SelectCommand="SELECT * FROM [DOCUMENTOS] WHERE (([DELETE_] <> @DELETE_) AND ([doc_titulo] LIKE '%' + @doc_titulo + '%' OR [doc_descripcion_fisica] LIKE '%' + @doc_descripcion_fisica + '%' OR [doc_observaciones] LIKE '%' + @doc_observaciones + '%')) ORDER BY [doc_numero]">
                         <SelectParameters>
                             <asp:Parameter DefaultValue="*" Name="DELETE_" Type="String" />
                             <asp:ControlParameter ControlID="txtSearch" DefaultValue="%" Name="doc_titulo" PropertyName="Text" Type="String" />

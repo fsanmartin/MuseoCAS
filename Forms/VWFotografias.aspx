@@ -51,7 +51,7 @@
                                     <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# Eval("fot_id", "MFotografias.aspx?ID={0}&Mode=View")%>' Text='<%# Eval("fot_titulo") %>'></asp:HyperLink>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField DataField="fot_numero" HeaderText="Número" SortExpression="fot_numero" />
+                            <asp:BoundField DataField="fot_numero" HeaderText="Código de Inventario" SortExpression="fot_numero" />
                             <asp:BoundField DataField="fot_resp_nombre" HeaderText="Responsable" SortExpression="fot_resp_nombre" />
                             <asp:BoundField DataField="DELETE_" HeaderText="DELETE_" SortExpression="DELETE_" Visible="False" />
                             <asp:BoundField DataField="INSERT_" HeaderText="INSERT_" SortExpression="INSERT_" Visible="False" />
@@ -75,7 +75,7 @@
                         <SortedDescendingHeaderStyle BackColor="#4870BE" />
                     </asp:GridView>
                     <asp:SqlDataSource ID="dsFotografias" runat="server" ConnectionString="<%$ ConnectionStrings:ColegioCN %>" 
-                        SelectCommand="SELECT [fot_id], [fot_numero], [fot_titulo], [fot_resp_nombre], [fot_resp_fecha], [DELETE_], [INSERT_], [UPDATE_], [USERID_] FROM [FOTOGRAFIA] WHERE (([DELETE_] &lt;&gt; @DELETE_) AND ([fot_titulo] LIKE '%' + @fot_titulo + '%' OR [fot_descripcion] LIKE '%' + @fot_descripcion + '%' OR [fot_observaciones] LIKE '%' + @fot_observaciones + '%')) ORDER BY [fot_titulo]" 
+                        SelectCommand="SELECT [fot_id], [fot_numero], [fot_titulo], [fot_resp_nombre], [fot_resp_fecha], [DELETE_], [INSERT_], [UPDATE_], [USERID_] FROM [FOTOGRAFIA] WHERE (([DELETE_] &lt;&gt; @DELETE_) AND ([fot_titulo] LIKE '%' + @fot_titulo + '%' OR [fot_descripcion] LIKE '%' + @fot_descripcion + '%' OR [fot_observaciones] LIKE '%' + @fot_observaciones + '%')) ORDER BY [fot_numero]" 
                         DeleteCommand="DELETE FROM [FOTOGRAFIA] WHERE [fot_id] = @fot_id" 
                         InsertCommand="INSERT INTO [FOTOGRAFIA] ([fot_numero], [fot_titulo], [fot_resp_nombre], [fot_resp_fecha], [DELETE_], [INSERT_], [UPDATE_], [USERID_]) VALUES (@fot_numero, @fot_titulo, @fot_resp_nombre, @fot_resp_fecha, @DELETE_, @INSERT_, @UPDATE_, @USERID_)" 
                         UpdateCommand="UPDATE [FOTOGRAFIA] SET [fot_numero] = @fot_numero, [fot_titulo] = @fot_titulo, [fot_resp_nombre] = @fot_resp_nombre, [fot_resp_fecha] = @fot_resp_fecha, [DELETE_] = @DELETE_, [INSERT_] = @INSERT_, [UPDATE_] = @UPDATE_, [USERID_] = @USERID_ WHERE [fot_id] = @fot_id">

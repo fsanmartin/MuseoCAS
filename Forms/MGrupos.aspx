@@ -21,7 +21,7 @@
             <td>
                 &nbsp;</td>
             <td>
-                <asp:TextBox ID="txtID" runat="server" CssClass="textbox" Width="69px" ReadOnly="True"></asp:TextBox>
+                <asp:TextBox ID="txtID" runat="server" CssClass="textbox" Width="69px" ReadOnly="True" Visible="False"></asp:TextBox>
             </td>
             <td>
                 &nbsp;</td>

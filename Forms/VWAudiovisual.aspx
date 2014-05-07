@@ -51,7 +51,7 @@
                                     <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# Eval("adv_id", "MAudiovisual.aspx?ID={0}&Mode=View") %>' Text='<%# Eval("adv_titulo") %>'></asp:HyperLink>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField DataField="adv_numero" HeaderText="Número" SortExpression="adv_numero" />
+                            <asp:BoundField DataField="adv_numero" HeaderText="Código de Inventario" SortExpression="adv_numero" />
                             <asp:BoundField DataField="adv_resp_nombre" HeaderText="Responsable" SortExpression="adv_resp_nombre" />
                             <asp:BoundField DataField="DELETE_" HeaderText="DELETE_" SortExpression="DELETE_" Visible="False" />
                             <asp:BoundField DataField="INSERT_" HeaderText="INSERT_" SortExpression="INSERT_" Visible="False" />
@@ -75,7 +75,7 @@
                         <SortedDescendingHeaderStyle BackColor="#4870BE" />
                     </asp:GridView>
                     <asp:SqlDataSource ID="dsAudiovisual" runat="server" ConnectionString="<%$ ConnectionStrings:ColegioCN %>" 
-                        SelectCommand="SELECT [adv_id], [adv_numero], [adv_titulo], [adv_resp_nombre], [adv_resp_fecha], [DELETE_], [INSERT_], [UPDATE_], [USERID_] FROM [AUDIOVISUAL] WHERE (([DELETE_] &lt;&gt; @DELETE_) AND ([adv_titulo] LIKE '%' + @adv_titulo + '%' OR [adv_contenido] LIKE '%' + @adv_contenido + '%' OR [adv_descripcion_fisica] LIKE '%' + @adv_descripcion_fisica + '%' OR [adv_observaciones] LIKE '%' + @adv_observaciones + '%')) ORDER BY [adv_titulo]" 
+                        SelectCommand="SELECT [adv_id], [adv_numero], [adv_titulo], [adv_resp_nombre], [adv_resp_fecha], [DELETE_], [INSERT_], [UPDATE_], [USERID_] FROM [AUDIOVISUAL] WHERE (([DELETE_] &lt;&gt; @DELETE_) AND ([adv_titulo] LIKE '%' + @adv_titulo + '%' OR [adv_contenido] LIKE '%' + @adv_contenido + '%' OR [adv_descripcion_fisica] LIKE '%' + @adv_descripcion_fisica + '%' OR [adv_observaciones] LIKE '%' + @adv_observaciones + '%')) ORDER BY [adv_numero]" 
                         DeleteCommand="DELETE FROM [AUDIOVISUAL] WHERE [adv_id] = @adv_id" 
                         InsertCommand="INSERT INTO [AUDIOVISUAL] ([adv_numero], [adv_titulo], [adv_resp_nombre], [adv_resp_fecha], [DELETE_], [INSERT_], [UPDATE_], [USERID_]) VALUES (@adv_numero, @adv_titulo, @adv_resp_nombre, @adv_resp_fecha, @DELETE_, @INSERT_, @UPDATE_, @USERID_)" 
                         UpdateCommand="UPDATE [AUDIOVISUAL] SET [adv_numero] = @adv_numero, [adv_titulo] = @adv_titulo, [adv_resp_nombre] = @adv_resp_nombre, [adv_resp_fecha] = @adv_resp_fecha, [DELETE_] = @DELETE_, [INSERT_] = @INSERT_, [UPDATE_] = @UPDATE_, [USERID_] = @USERID_ WHERE [adv_id] = @adv_id">

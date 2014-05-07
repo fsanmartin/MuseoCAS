@@ -5,6 +5,7 @@ Partial Class Forms_MGrupos
 
     Dim sCN As String = ConfigurationManager.ConnectionStrings("ColegioCN").ConnectionString
     Dim bPostBack As Boolean
+    Dim iID As Integer
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
         ' Cargar DropDownLists
@@ -165,7 +166,7 @@ Partial Class Forms_MGrupos
                             "GETDATE(), " & _
                             "GETDATE(), " & _
                             "'" & Trim(User.Identity.Name) & "'" & _
-                            ") "
+                            "); Select Scope_Identity()"
 
         Dim sUpdateGrupo As String = "UPDATE grupos " & _
                "SET grp_name = '" & Trim(txtGrupo.Text) & "'" & _
@@ -184,18 +185,19 @@ Partial Class Forms_MGrupos
 
         If txtID.Text = "Nuevo" Then
             cmd = New SqlCommand(sInsertGrupo, cn)
-            cmd.ExecuteNonQuery()
+            iID = cmd.ExecuteScalar()
+            txtID.Text = iID
         Else
+            ' Limpiar GRUPOS_FUNCIONALIDAD
+            cmd = New SqlCommand(sDelete, cn)
+            cmd.ExecuteNonQuery()
+
             cmd = New SqlCommand(sUpdateGrupo, cn)
             cmd.ExecuteNonQuery()
         End If
 
-        ' Limpiar GRUPOS_FUNCIONALIDAD
-        cmd = New SqlCommand(sDelete, cn)
-        cmd.ExecuteNonQuery()
-
         ' Grabar los Accesos en GRUPOS_FUNCIONALIDAD
-        Call CheckAccess(txtID.Text)
+        Call CheckAccess(iID)
 
         cn.Close()
 
