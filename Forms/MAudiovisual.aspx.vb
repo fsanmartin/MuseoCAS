@@ -90,7 +90,7 @@ Partial Class Forms_MAudiovisual
             txtNumInventario.Text = Trim(dsAudiovisual("adv_numero"))
             'If Not bPostBack Then cboDeposito.SelectedValue = Trim(dsAudiovisual("adv_dep_id"))
 
-            cboDeposito.SelectedValue = Trim(dsAudiovisual("adv_dep_id"))
+            cboDeposito.SelectedValue = dsAudiovisual("adv_dep_id")
             '' --------- ESTANTE
             Try
                 cboEstante.SelectedValue = Trim(dsAudiovisual("adv_estante"))
@@ -138,15 +138,15 @@ Partial Class Forms_MAudiovisual
     End Sub
 
     Private Sub LoadLists()
-        Dim sQueryDeposito As String = "SELECT dep_id, dep_name FROM deposito WHERE DELETE_ <> '*'"
+        'Dim sQueryDeposito As String = "SELECT dep_id, dep_name FROM deposito WHERE DELETE_ <> '*'"
         Dim sQueryCodigos As String = "SELECT cod_cod, cod_val FROM codigos WHERE cod_name = '%COD_NAME%' AND DELETE_ <> '*'"
         ' -------------------------
         ' Depóstio
-        Dim dsDeposito As New SqlDataSource(sCN, sQueryDeposito)
+        Dim dsDeposito As New SqlDataSource(sCN, Replace(sQueryCodigos, "%COD_NAME%", "_DEPOSITO"))
 
         cboDeposito.DataSource = dsDeposito
-        cboDeposito.DataValueField = "dep_id"
-        cboDeposito.DataTextField = "dep_name"
+        cboDeposito.DataValueField = "cod_cod"
+        cboDeposito.DataTextField = "cod_val"
         cboDeposito.DataBind()
         dsDeposito.Dispose()
 

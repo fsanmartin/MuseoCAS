@@ -90,7 +90,7 @@ Partial Class Forms_MObjetos
             txtNumInventario.Text = Trim(dsObjetos("obj_numero"))
             'If Not bPostBack Then cboDeposito.SelectedValue = Trim(dsObjetos("obj_dep_id"))
 
-            cboDeposito.SelectedValue = Trim(dsObjetos("obj_dep_id"))
+            cboDeposito.SelectedValue = dsObjetos("obj_dep_id")
             '' --------- ESTANTE
             Try
                 cboEstante.SelectedValue = Trim(dsObjetos("obj_estante"))
@@ -162,15 +162,15 @@ Partial Class Forms_MObjetos
     'End Sub
 
     Private Sub LoadLists()
-        Dim sQueryDeposito As String = "SELECT dep_id, dep_name FROM deposito WHERE DELETE_ <> '*'"
+        'Dim sQueryDeposito As String = "SELECT dep_id, dep_name FROM deposito WHERE DELETE_ <> '*'"
         Dim sQueryCodigos As String = "SELECT cod_cod, cod_val FROM codigos WHERE cod_name = '%COD_NAME%' AND DELETE_ <> '*'"
         ' -------------------------
         ' Depóstio
-        Dim dsDeposito As New SqlDataSource(sCN, sQueryDeposito)
+        Dim dsDeposito As New SqlDataSource(sCN, Replace(sQueryCodigos, "%COD_NAME%", "_DEPOSITO"))
 
         cboDeposito.DataSource = dsDeposito
-        cboDeposito.DataValueField = "dep_id"
-        cboDeposito.DataTextField = "dep_name"
+        cboDeposito.DataValueField = "cod_cod"
+        cboDeposito.DataTextField = "cod_val"
         cboDeposito.DataBind()
         dsDeposito.Dispose()
 
@@ -412,7 +412,7 @@ Partial Class Forms_MObjetos
 
         Dim sUpdateObjetos As String = "UPDATE Objetos " & _
                "SET obj_numero = '" & Trim(txtNumInventario.Text) & "'" & _
-               "   ,obj_dep_id = '" & cboDeposito.SelectedValue & "'" & _
+               "   ,obj_dep_id = '" & Trim(cboDeposito.SelectedValue) & "'" & _
                "   ,obj_estante = '" & cboEstante.SelectedValue & "'" & _
                "   ,obj_columna = '" & cboColumna.SelectedValue & "'" & _
                "   ,obj_fila = '" & cboFila.SelectedValue & "'" & _
