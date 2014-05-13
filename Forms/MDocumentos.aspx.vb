@@ -331,8 +331,12 @@ Partial Class Forms_MAudiovisual
 
     Protected Sub btnSave_Click(sender As Object, e As ImageClickEventArgs) Handles btnSave.Click
         DateTime.TryParseExact(txtRespFecha.Text, "dd-MM-yyyy", Nothing, Globalization.DateTimeStyles.None, dFechaResp)
-        Call SaveDocumentos()
-        Response.Redirect("VWDocumentos.aspx")
+        If Functions.IdentityExist(txtNumInventario.Text, "doc_numero", "documentos") Then
+            lblErrorMessages.Text = "El Número de Inventario existe. Favor ingrese un dato válido"
+        Else
+            Call SaveDocumentos()
+            Response.Redirect("VWDocumentos.aspx")
+        End If
     End Sub
 
     Protected Sub btnEdit_Click(sender As Object, e As ImageClickEventArgs) Handles btnEdit.Click

@@ -302,8 +302,12 @@ Partial Class Forms_MObjetos
 
     Protected Sub btnSave_Click(sender As Object, e As ImageClickEventArgs) Handles btnSave.Click
         DateTime.TryParseExact(txtRespFecha.Text, "dd-MM-yyyy", Nothing, Globalization.DateTimeStyles.None, dFechaResp)
-        Call SaveObjetos()
-        Response.Redirect("VWObjetos.aspx")
+        If Functions.IdentityExist(txtNumInventario.Text, "obj_numero", "objetos") Then
+            lblErrorMessages.Text = "El Número de Inventario existe. Favor ingrese un dato válido"
+        Else
+            Call SaveObjetos()
+            Response.Redirect("VWObjetos.aspx")
+        End If
     End Sub
 
     Protected Sub btnEdit_Click(sender As Object, e As ImageClickEventArgs) Handles btnEdit.Click

@@ -73,6 +73,7 @@
                 <asp:TextBox ID="txtNumInventario" runat="server" CssClass="textbox"></asp:TextBox>
                 <asp:Label ID="lblObligatorio" runat="server" CssClass="LabelsError" Text="*"></asp:Label>
                 <asp:RequiredFieldValidator ID="valNumInventario" runat="server" ControlToValidate="txtNumInventario" CssClass="LabelsError" ErrorMessage="Número de inventario">Obligatorio</asp:RequiredFieldValidator>
+                <%--<asp:CustomValidator ID="CustomValidator1" ControlToValidate="txtNumInventario" runat="server" OnServerValidate="CustomValidator1_ServerValidate" ErrorMessage="Número de inventario existente. Ingrese un valor válido."></asp:CustomValidator>--%>
             </td>
         </tr>
         <tr>

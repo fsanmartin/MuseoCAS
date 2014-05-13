@@ -75,7 +75,7 @@
                         <SortedDescendingHeaderStyle BackColor="#4870BE" />
                     </asp:GridView>
                     <asp:SqlDataSource ID="dsObjetos" runat="server" ConnectionString="<%$ ConnectionStrings:ColegioCN %>" 
-                        SelectCommand="SELECT [obj_id], [obj_numero], [obj_titulo], [obj_resp_nombre], [obj_resp_fecha], [DELETE_], [INSERT_], [UPDATE_], [USERID_] FROM [OBJETOS] WHERE (([DELETE_] &lt;&gt; @DELETE_) AND ([obj_titulo] LIKE '%' + @obj_titulo + '%' OR [obj_descripcion_fisica] LIKE '%' + @obj_descripcion_fisica + '%' OR [obj_observaciones] LIKE '%' + @obj_observaciones + '%')) ORDER BY [obj_numero]" 
+                        SelectCommand="SELECT [obj_id], [obj_numero], [obj_titulo], [obj_resp_nombre], [obj_resp_fecha], [DELETE_], [INSERT_], [UPDATE_], [USERID_] FROM [OBJETOS] WHERE (([DELETE_] &lt;&gt; @DELETE_) AND ([obj_titulo] LIKE '%' + @obj_titulo + '%' OR [obj_descripcion_fisica] LIKE '%' + @obj_descripcion_fisica + '%' OR [obj_observaciones] LIKE '%' + @obj_observaciones + '%' OR [obj_palabra_clave] LIKE '%' + @obj_palabra_clave + '%')) ORDER BY [obj_numero]" 
                         DeleteCommand="DELETE FROM [OBJETOS] WHERE [obj_id] = @obj_id" 
                         InsertCommand="INSERT INTO [OBJETOS] ([obj_numero], [obj_titulo], [obj_resp_nombre], [obj_resp_fecha], [DELETE_], [INSERT_], [UPDATE_], [USERID_]) VALUES (@obj_numero, @obj_titulo, @obj_resp_nombre, @obj_resp_fecha, @DELETE_, @INSERT_, @UPDATE_, @USERID_)" 
                         UpdateCommand="UPDATE [OBJETOS] SET [obj_numero] = @obj_numero, [obj_titulo] = @obj_titulo, [obj_resp_nombre] = @obj_resp_nombre, [obj_resp_fecha] = @obj_resp_fecha, [DELETE_] = @DELETE_, [INSERT_] = @INSERT_, [UPDATE_] = @UPDATE_, [USERID_] = @USERID_ WHERE [obj_id] = @obj_id">
@@ -97,6 +97,7 @@
                             <asp:ControlParameter ControlID="txtSearch" DefaultValue="%%" Name="obj_titulo" PropertyName="Text" Type="String" />
                             <asp:ControlParameter ControlID="txtSearch" DefaultValue="%%" Name="obj_descripcion_fisica" PropertyName="Text" Type="String" />
                             <asp:ControlParameter ControlID="txtSearch" DefaultValue="%%" Name="obj_observaciones" PropertyName="Text" Type="String" />
+                            <asp:ControlParameter ControlID="txtSearch" DefaultValue="%%" Name="obj_palabra_clave" PropertyName="Text" Type="String" />
                         </SelectParameters>
                         <UpdateParameters>
                             <asp:Parameter Name="obj_numero" Type="String" />

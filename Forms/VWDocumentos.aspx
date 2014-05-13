@@ -71,12 +71,13 @@
                         <SortedDescendingHeaderStyle BackColor="#4870BE" />
                     </asp:GridView>
                     <asp:SqlDataSource ID="dsDocumentos" runat="server" ConnectionString="<%$ ConnectionStrings:ColegioCN %>" 
-                        SelectCommand="SELECT * FROM [DOCUMENTOS] WHERE (([DELETE_] <> @DELETE_) AND ([doc_titulo] LIKE '%' + @doc_titulo + '%' OR [doc_descripcion_fisica] LIKE '%' + @doc_descripcion_fisica + '%' OR [doc_observaciones] LIKE '%' + @doc_observaciones + '%')) ORDER BY [doc_numero]">
+                        SelectCommand="SELECT * FROM [DOCUMENTOS] WHERE (([DELETE_] <> @DELETE_) AND ([doc_titulo] LIKE '%' + @doc_titulo + '%' OR [doc_descripcion_fisica] LIKE '%' + @doc_descripcion_fisica + '%' OR [doc_observaciones] LIKE '%' + @doc_observaciones + '%' OR [doc_palabra_clave] LIKE '%' + @doc_palabra_clave + '%')) ORDER BY [doc_numero]">
                         <SelectParameters>
                             <asp:Parameter DefaultValue="*" Name="DELETE_" Type="String" />
                             <asp:ControlParameter ControlID="txtSearch" DefaultValue="%" Name="doc_titulo" PropertyName="Text" Type="String" />
                             <asp:ControlParameter ControlID="txtSearch" DefaultValue="%" Name="doc_descripcion_fisica" PropertyName="Text" Type="String" />
                             <asp:ControlParameter ControlID="txtSearch" DefaultValue="%" Name="doc_observaciones" PropertyName="Text" Type="String" />
+                            <asp:ControlParameter ControlID="txtSearch" DefaultValue="%" Name="doc_palabra_clave" PropertyName="Text" Type="String" />
                         </SelectParameters>
                     </asp:SqlDataSource>
                 </td>

@@ -217,4 +217,33 @@ Public Class Functions
         Return arImagesOutput
     End Function
 
+    Public Shared Function IdentityExist(sID As String, sFieldName As String, sTable As String) As Boolean
+        Dim sCN As String = ConfigurationManager.ConnectionStrings("ColegioCN").ConnectionString
+        Dim bReturn As Boolean
+        Dim iExist As Short
+        Dim sQuery As String = "SELECT COUNT(*) AS existe " & _
+                               "FROM " & sTable & " " & _
+                               "WHERE " & sFieldName & " = '" & sID & "' " & _
+                               "  AND DELETE_ <> '*'"
+
+        ' Conexión SQL Server
+        Dim cn As SqlConnection = New SqlConnection(sCN)
+        Dim cmd As SqlCommand = New SqlCommand(sQuery, cn)
+        Dim dsExist As SqlDataReader
+
+        ' Abrir conexión
+        cn.Open()
+
+        dsExist = cmd.ExecuteReader
+
+        While dsExist.Read
+            iExist = dsExist("existe")
+        End While
+
+        If iExist > 0 Then bReturn = True
+
+        cn.Close()
+
+        Return bReturn
+    End Function
 End Class

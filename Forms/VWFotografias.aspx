@@ -75,7 +75,7 @@
                         <SortedDescendingHeaderStyle BackColor="#4870BE" />
                     </asp:GridView>
                     <asp:SqlDataSource ID="dsFotografias" runat="server" ConnectionString="<%$ ConnectionStrings:ColegioCN %>" 
-                        SelectCommand="SELECT [fot_id], [fot_numero], [fot_titulo], [fot_resp_nombre], [fot_resp_fecha], [DELETE_], [INSERT_], [UPDATE_], [USERID_] FROM [FOTOGRAFIA] WHERE (([DELETE_] &lt;&gt; @DELETE_) AND ([fot_titulo] LIKE '%' + @fot_titulo + '%' OR [fot_descripcion] LIKE '%' + @fot_descripcion + '%' OR [fot_observaciones] LIKE '%' + @fot_observaciones + '%')) ORDER BY [fot_numero]" 
+                        SelectCommand="SELECT [fot_id], [fot_numero], [fot_titulo], [fot_resp_nombre], [fot_resp_fecha], [DELETE_], [INSERT_], [UPDATE_], [USERID_] FROM [FOTOGRAFIA] WHERE (([DELETE_] &lt;&gt; @DELETE_) AND ([fot_titulo] LIKE '%' + @fot_titulo + '%' OR [fot_descripcion] LIKE '%' + @fot_descripcion + '%' OR [fot_observaciones] LIKE '%' + @fot_observaciones + '%' OR [fot_palabra_clave] LIKE '%' + @fot_palabra_clave + '%')) ORDER BY [fot_numero]" 
                         DeleteCommand="DELETE FROM [FOTOGRAFIA] WHERE [fot_id] = @fot_id" 
                         InsertCommand="INSERT INTO [FOTOGRAFIA] ([fot_numero], [fot_titulo], [fot_resp_nombre], [fot_resp_fecha], [DELETE_], [INSERT_], [UPDATE_], [USERID_]) VALUES (@fot_numero, @fot_titulo, @fot_resp_nombre, @fot_resp_fecha, @DELETE_, @INSERT_, @UPDATE_, @USERID_)" 
                         UpdateCommand="UPDATE [FOTOGRAFIA] SET [fot_numero] = @fot_numero, [fot_titulo] = @fot_titulo, [fot_resp_nombre] = @fot_resp_nombre, [fot_resp_fecha] = @fot_resp_fecha, [DELETE_] = @DELETE_, [INSERT_] = @INSERT_, [UPDATE_] = @UPDATE_, [USERID_] = @USERID_ WHERE [fot_id] = @fot_id">
@@ -97,6 +97,7 @@
                             <asp:ControlParameter ControlID="txtSearch" DefaultValue="%%" Name="fot_titulo" PropertyName="Text" Type="String" />
                             <asp:ControlParameter ControlID="txtSearch" DefaultValue="%%" Name="fot_descripcion" PropertyName="Text" Type="String" />
                             <asp:ControlParameter ControlID="txtSearch" DefaultValue="%%" Name="fot_observaciones" PropertyName="Text" Type="String" />
+                            <asp:ControlParameter ControlID="txtSearch" DefaultValue="%%" Name="fot_palabra_clave" PropertyName="Text" Type="String" />
                         </SelectParameters>
                         <UpdateParameters>
                             <asp:Parameter Name="fot_numero" Type="String" />

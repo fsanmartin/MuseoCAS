@@ -75,7 +75,7 @@
                         <SortedDescendingHeaderStyle BackColor="#4870BE" />
                     </asp:GridView>
                     <asp:SqlDataSource ID="dsAudiovisual" runat="server" ConnectionString="<%$ ConnectionStrings:ColegioCN %>" 
-                        SelectCommand="SELECT [adv_id], [adv_numero], [adv_titulo], [adv_resp_nombre], [adv_resp_fecha], [DELETE_], [INSERT_], [UPDATE_], [USERID_] FROM [AUDIOVISUAL] WHERE (([DELETE_] &lt;&gt; @DELETE_) AND ([adv_titulo] LIKE '%' + @adv_titulo + '%' OR [adv_contenido] LIKE '%' + @adv_contenido + '%' OR [adv_descripcion_fisica] LIKE '%' + @adv_descripcion_fisica + '%' OR [adv_observaciones] LIKE '%' + @adv_observaciones + '%')) ORDER BY [adv_numero]" 
+                        SelectCommand="SELECT [adv_id], [adv_numero], [adv_titulo], [adv_resp_nombre], [adv_resp_fecha], [DELETE_], [INSERT_], [UPDATE_], [USERID_] FROM [AUDIOVISUAL] WHERE (([DELETE_] &lt;&gt; @DELETE_) AND ([adv_titulo] LIKE '%' + @adv_titulo + '%' OR [adv_contenido] LIKE '%' + @adv_contenido + '%' OR [adv_descripcion_fisica] LIKE '%' + @adv_descripcion_fisica + '%' OR [adv_observaciones] LIKE '%' + @adv_observaciones + '%' OR [adv_palabra_clave] LIKE '%' + @adv_palabra_clave + '%')) ORDER BY [adv_numero]" 
                         DeleteCommand="DELETE FROM [AUDIOVISUAL] WHERE [adv_id] = @adv_id" 
                         InsertCommand="INSERT INTO [AUDIOVISUAL] ([adv_numero], [adv_titulo], [adv_resp_nombre], [adv_resp_fecha], [DELETE_], [INSERT_], [UPDATE_], [USERID_]) VALUES (@adv_numero, @adv_titulo, @adv_resp_nombre, @adv_resp_fecha, @DELETE_, @INSERT_, @UPDATE_, @USERID_)" 
                         UpdateCommand="UPDATE [AUDIOVISUAL] SET [adv_numero] = @adv_numero, [adv_titulo] = @adv_titulo, [adv_resp_nombre] = @adv_resp_nombre, [adv_resp_fecha] = @adv_resp_fecha, [DELETE_] = @DELETE_, [INSERT_] = @INSERT_, [UPDATE_] = @UPDATE_, [USERID_] = @USERID_ WHERE [adv_id] = @adv_id">
@@ -98,6 +98,7 @@
                             <asp:ControlParameter ControlID="txtSearch" DefaultValue="%%" Name="adv_contenido" PropertyName="Text" Type="String" />
                             <asp:ControlParameter ControlID="txtSearch" DefaultValue="%%" Name="adv_descripcion_fisica" PropertyName="Text" Type="String" />
                             <asp:ControlParameter ControlID="txtSearch" DefaultValue="%%" Name="adv_observaciones" PropertyName="Text" Type="String" />
+                            <asp:ControlParameter ControlID="txtSearch" DefaultValue="%%" Name="adv_palabra_clave" PropertyName="Text" Type="String" />
                         </SelectParameters>
                         <UpdateParameters>
                             <asp:Parameter Name="adv_numero" Type="String" />
