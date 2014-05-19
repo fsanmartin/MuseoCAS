@@ -20,6 +20,7 @@
             left: 13px;
             height: 50px;
         }
+        .textbox {}
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cpMainContent" Runat="Server">
@@ -38,12 +39,12 @@
                 changeMonth: true,
                 changeYear: true,
             });
-            $('#cpMainContent_txtFechaEntrada').datepicker(
-            {
-                dateFormat: "dd-mm-yy",
-                changeMonth: true,
-                changeYear: true,
-            });
+            //$('#cpMainContent_txtFechaEntrada').datepicker(
+            //{
+            //    dateFormat: "dd-mm-yy",
+            //    changeMonth: true,
+            //    changeYear: true,
+            //});
         });
     </script> 
 
@@ -164,7 +165,7 @@
                 <asp:Label ID="lblAutor2" runat="server" CssClass="Labels" Text="Fecha de entrada:"></asp:Label>
             </td>
             <td colspan="4">
-                <asp:TextBox ID="txtFechaEntrada" runat="server" CssClass="textbox" MaxLength="10" Width="155px"></asp:TextBox>
+                <asp:TextBox ID="txtFechaEntrada" runat="server" CssClass="textbox" MaxLength="10" Width="200px"></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -181,7 +182,7 @@
                 <asp:Label ID="lblProcedencia" runat="server" CssClass="Labels" Text="Procedencia:"></asp:Label>
             </td>
             <td colspan="4">
-                <asp:TextBox ID="txtProcedencia" runat="server" CssClass="textbox" MaxLength="200" Width="282px"></asp:TextBox>
+                <asp:TextBox ID="txtProcedencia" runat="server" CssClass="textbox" MaxLength="200" Width="350px" TextMode="MultiLine"></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -268,7 +269,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <asp:Label ID="lblConservacion" runat="server" CssClass="Labels" Text="Estado de conversación:"></asp:Label>
+                <asp:Label ID="lblConservacion" runat="server" CssClass="Labels" Text="Estado de conservación:"></asp:Label>
             </td>
             <td colspan="4">
                 <asp:DropDownList ID="cboConservacion" runat="server" CssClass="textbox">
@@ -280,7 +281,7 @@
                 <asp:Label ID="lblInscripciones" runat="server" CssClass="Labels" Text="Inscripciones/Marcas:"></asp:Label>
             </td>
             <td colspan="4">
-                <asp:TextBox ID="txtInscripciones" runat="server" CssClass="textbox" MaxLength="200" Width="282px"></asp:TextBox>
+                <asp:TextBox ID="txtInscripciones" runat="server" CssClass="textbox" Height="70px" TextMode="MultiLine" Width="350px"></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -296,7 +297,7 @@
                 <asp:Label ID="lblAdquisicion0" runat="server" CssClass="Labels" Text="Palabras clave:"></asp:Label>
             </td>
             <td colspan="4">
-                <asp:TextBox ID="txtPalabrasClaves" runat="server" CssClass="textbox" MaxLength="200" Width="282px"></asp:TextBox>
+                <asp:TextBox ID="txtPalabrasClaves" runat="server" CssClass="textbox" MaxLength="200" Width="350px" TextMode="MultiLine"></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -381,7 +382,7 @@
         <tr>
             <td colspan="6">
                 <table class="auto-style4">
-<%  Dim arImages As New ArrayList
+                    <%  Dim arImages As New ArrayList
     Dim iPhoto As Integer = 1
     Dim i As Integer
     Dim iAlto As Integer
@@ -411,20 +412,16 @@
                 
                 If iPhoto = 1 Then%>
                     <tr>
-<%              End If%>
-<%--                        <td><asp:Image runat="server" AlternateText="<%Response.Write(sImg(1))%>" ImageUrl="<%Response.Write(sImg(0))%>"/></td>--%>
+                        <%              End If%><%--                        <td><asp:Image runat="server" AlternateText="<%Response.Write(sImg(1))%>" ImageUrl="<%Response.Write(sImg(0))%>"/></td>--%>
                         <td class="auto-style4">
                             <img src="<%Response.Write(sPath)%>" alt="<%Response.Write(sImg(0))%>" width="<%Response.Write(iAncho)%>" height="<%Response.Write(iAlto)%>" />
                             <table><tr><td><%Response.Write(sImg(1))%></td></tr></table>
                         </td>
-<%              If iPhoto = 3 Then%>
+                        <%              If iPhoto = 3 Then%>
                     </tr>
-<%                  iPhoto = 0 %>
-<%              End If%>
-<%              iPhoto = iPhoto + 1
+                    <%                  iPhoto = 0 %><%              End If%><%              iPhoto = iPhoto + 1
             Next i
-        End If%>
-<%  End If%>
+        End If%><%  End If%>
                 </table>
             </td>
 

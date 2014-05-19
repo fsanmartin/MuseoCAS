@@ -32,7 +32,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="doc_id" DataSourceID="dsDocumentos" CellPadding="4" Width="536px" ForeColor="#333333" GridLines="None">
+                    <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="doc_id" DataSourceID="dsDocumentos" CellPadding="4" Width="536px" ForeColor="#333333" GridLines="None" PageSize="30">
                         <AlternatingRowStyle BackColor="White" />
                         <Columns>
                             <asp:TemplateField ShowHeader="False">
@@ -51,7 +51,7 @@
                                     <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# Eval("doc_id", "MDocumentos.aspx?ID={0}&Mode=View")%>' Text='<%# Eval("doc_titulo") %>'></asp:HyperLink>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField DataField="doc_numero" HeaderText="Código de Inventario" SortExpression="doc_numero" />
+                            <asp:BoundField DataField="doc_numero" HeaderText="Nro. de Inventario" SortExpression="doc_numero" />
                             <asp:BoundField DataField="doc_resp_nombre" HeaderText="Responsable" SortExpression="doc_resp_nombre" />
                             <asp:TemplateField ShowHeader="False">
                                 <ItemTemplate>

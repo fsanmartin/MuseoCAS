@@ -20,6 +20,7 @@
             left: 13px;
             height: 50px;
         }
+        .textbox {}
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cpMainContent" Runat="Server">
@@ -137,7 +138,7 @@
             </td>
             <td colspan="4">
                 <asp:TextBox ID="txtContenido" runat="server" CssClass="textbox" Height="70px" TextMode="MultiLine" Width="350px"></asp:TextBox>
-                <%--<asp:Label ID="lblObligatorio1" runat="server" CssClass="LabelsError" Text="*"></asp:Label>--%>                <%--<asp:RequiredFieldValidator ID="valContenido" runat="server" ControlToValidate="txtContenido" CssClass="LabelsError" ErrorMessage="Contenido">Obligatorio</asp:RequiredFieldValidator>--%>
+                <%--<asp:Label ID="lblObligatorio1" runat="server" CssClass="LabelsError" Text="*"></asp:Label>--%><%--<asp:RequiredFieldValidator ID="valContenido" runat="server" ControlToValidate="txtContenido" CssClass="LabelsError" ErrorMessage="Contenido">Obligatorio</asp:RequiredFieldValidator>--%>
             </td>
         </tr>
         <tr>
@@ -155,7 +156,7 @@
             <td colspan="4">
                 <asp:TextBox ID="txtDia" runat="server" CssClass="textbox" MaxLength="2" Width="18px"></asp:TextBox>
                 /<asp:DropDownList ID="cboMes" runat="server" CssClass="textbox">
-                    <asp:ListItem Value="">-Ninguno-</asp:ListItem>
+                    <asp:ListItem Value="">-- ninguno --</asp:ListItem>
                     <asp:ListItem Value="01">Enero</asp:ListItem>
                     <asp:ListItem Value="02">Febrero</asp:ListItem>
                     <asp:ListItem Value="03">Marzo</asp:ListItem>
@@ -231,7 +232,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <asp:Label ID="lblConservacion" runat="server" CssClass="Labels" Text="Estado de conversación:"></asp:Label>
+                <asp:Label ID="lblConservacion" runat="server" CssClass="Labels" Text="Estado de conservación:"></asp:Label>
             </td>
             <td colspan="4">
                 <asp:DropDownList ID="cboConservacion" runat="server" CssClass="textbox">
@@ -243,7 +244,7 @@
                 <asp:Label ID="lblProcedencia" runat="server" CssClass="Labels" Text="Procedencia:"></asp:Label>
             </td>
             <td colspan="4">
-                <asp:TextBox ID="txtProcedencia" runat="server" CssClass="textbox" MaxLength="200" Width="282px"></asp:TextBox>
+                <asp:TextBox ID="txtProcedencia" runat="server" CssClass="textbox" MaxLength="200" Width="350px" TextMode="MultiLine"></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -251,7 +252,7 @@
                 <asp:Label ID="lblFuncion" runat="server" CssClass="Labels" Text="Función:"></asp:Label>
             </td>
             <td colspan="4">
-                <asp:TextBox ID="txtFuncion" runat="server" CssClass="textbox" MaxLength="200" Width="282px"></asp:TextBox>
+                <asp:TextBox ID="txtFuncion" runat="server" CssClass="textbox" MaxLength="200" Width="350px" TextMode="MultiLine"></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -259,7 +260,7 @@
                 <asp:Label ID="lblInscripciones" runat="server" CssClass="Labels" Text="Inscripciones/Marcas:"></asp:Label>
             </td>
             <td colspan="4">
-                <asp:TextBox ID="txtInscripciones" runat="server" CssClass="textbox" MaxLength="200" Width="282px"></asp:TextBox>
+                <asp:TextBox ID="txtInscripciones" runat="server" CssClass="textbox" Height="70px" TextMode="MultiLine" Width="350px"></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -292,7 +293,7 @@
                 <asp:Label ID="lblAdquisicion0" runat="server" CssClass="Labels" Text="Palabras clave:"></asp:Label>
             </td>
             <td colspan="4">
-                <asp:TextBox ID="txtPalabrasClaves" runat="server" CssClass="textbox" MaxLength="200" Width="282px"></asp:TextBox>
+                <asp:TextBox ID="txtPalabrasClaves" runat="server" CssClass="textbox" MaxLength="200" Width="350px" TextMode="MultiLine"></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -304,7 +305,7 @@
             </td>
             <td colspan="2">
                 <asp:TextBox ID="txtRespNombre" runat="server" CssClass="textbox" Width="155px"></asp:TextBox>
-                <%--<asp:Label ID="lblObligatorio2" runat="server" CssClass="LabelsError" Text="*"></asp:Label>--%>                <%--<asp:RequiredFieldValidator ID="valRespNombre" runat="server" ControlToValidate="txtRespNombre" CssClass="LabelsError" ErrorMessage="Responsable -&gt; Nombre">Obligatorio</asp:RequiredFieldValidator>--%>
+                <%--<asp:Label ID="lblObligatorio2" runat="server" CssClass="LabelsError" Text="*"></asp:Label>--%><%--<asp:RequiredFieldValidator ID="valRespNombre" runat="server" ControlToValidate="txtRespNombre" CssClass="LabelsError" ErrorMessage="Responsable -&gt; Nombre">Obligatorio</asp:RequiredFieldValidator>--%>
             </td>
         </tr>
         <tr>
@@ -377,7 +378,7 @@
         <tr>
             <td colspan="6">
                 <table class="auto-style4">
-<%  Dim arImages As New ArrayList
+                    <%  Dim arImages As New ArrayList
     Dim iPhoto As Integer = 1
     Dim i As Integer
     Dim iAlto As Integer
@@ -407,20 +408,16 @@
                 
                 If iPhoto = 1 Then%>
                     <tr>
-<%              End If%>
-<%--                        <td><asp:Image runat="server" AlternateText="<%Response.Write(sImg(1))%>" ImageUrl="<%Response.Write(sImg(0))%>"/></td>--%>
+                        <%              End If%><%--                        <td><asp:Image runat="server" AlternateText="<%Response.Write(sImg(1))%>" ImageUrl="<%Response.Write(sImg(0))%>"/></td>--%>
                         <td class="auto-style4">
                             <img src="<%Response.Write(sPath)%>" alt="<%Response.Write(sImg(0))%>" width="<%Response.Write(iAncho)%>" height="<%Response.Write(iAlto)%>" />
                             <table><tr><td><%Response.Write(sImg(1))%></td></tr></table>
                         </td>
-<%              If iPhoto = 3 Then%>
+                        <%              If iPhoto = 3 Then%>
                     </tr>
-<%                  iPhoto = 0 %>
-<%              End If%>
-<%              iPhoto = iPhoto + 1
+                    <%                  iPhoto = 0 %><%              End If%><%              iPhoto = iPhoto + 1
             Next i
-        End If%>
-<%  End If%>
+        End If%><%  End If%>
                 </table>
             </td>
         </tr>

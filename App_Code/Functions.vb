@@ -217,13 +217,17 @@ Public Class Functions
         Return arImagesOutput
     End Function
 
-    Public Shared Function IdentityExist(sID As String, sFieldName As String, sTable As String) As Boolean
+    Public Shared Function IdentityExist(sID As String, sIDFieldName As String, _
+                                         sKey As String, sKeyFieldName As String, _
+                                         sTable As String) As Boolean
+
         Dim sCN As String = ConfigurationManager.ConnectionStrings("ColegioCN").ConnectionString
         Dim bReturn As Boolean
         Dim iExist As Short
         Dim sQuery As String = "SELECT COUNT(*) AS existe " & _
                                "FROM " & sTable & " " & _
-                               "WHERE " & sFieldName & " = '" & sID & "' " & _
+                               "WHERE " & sKeyFieldName & " = '" & sKey & "' " & _
+                               "  AND " & sIDFieldName & " <> " & sID & _
                                "  AND DELETE_ <> '*'"
 
         ' Conexión SQL Server

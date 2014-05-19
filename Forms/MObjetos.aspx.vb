@@ -172,6 +172,8 @@ Partial Class Forms_MObjetos
         cboDeposito.DataValueField = "cod_cod"
         cboDeposito.DataTextField = "cod_val"
         cboDeposito.DataBind()
+        cboDeposito.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboDeposito.SelectedValue = "-1"
         dsDeposito.Dispose()
 
         ' -------------------------
@@ -181,15 +183,19 @@ Partial Class Forms_MObjetos
         cboTipoBien.DataValueField = "cod_cod"
         cboTipoBien.DataTextField = "cod_val"
         cboTipoBien.DataBind()
+        cboTipoBien.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboTipoBien.SelectedValue = "-1"
         dsTipoBien.Dispose()
 
         ' -------------------------
         ' Denominación Objeto
-        Dim dsDenomiacion As New SqlDataSource(sCN, Replace(sQueryCodigos, "%COD_NAME%", "_DENOMINACION_OBJETO"))
+        Dim dsDenomiacion As New SqlDataSource(sCN, Replace(sQueryCodigos, "%COD_NAME%", "_DENOMINA_OBJ_OBJ"))
         cboDenominacion.DataSource = dsDenomiacion
         cboDenominacion.DataValueField = "cod_cod"
         cboDenominacion.DataTextField = "cod_val"
         cboDenominacion.DataBind()
+        cboDenominacion.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboDenominacion.SelectedValue = "-1"
         dsDenomiacion.Dispose()
 
         ' -------------------------
@@ -197,6 +203,8 @@ Partial Class Forms_MObjetos
         For i As Integer = ((CInt(Year(Date.Now) / 10) * 10) + 9) To 1709 Step -10
             cboDecada.Items.Add(New ListItem(CStr(i - 10) & "-" & CStr(i), CStr(i - 10) & "-" & CStr(i)))
         Next i
+        cboDecada.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboDecada.SelectedValue = "-1"
 
         ' -------------------------
         ' Estado Conservación
@@ -205,6 +213,8 @@ Partial Class Forms_MObjetos
         cboConservacion.DataValueField = "cod_cod"
         cboConservacion.DataTextField = "cod_val"
         cboConservacion.DataBind()
+        cboConservacion.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboConservacion.SelectedValue = "-1"
         dsConservacion.Dispose()
 
         ' -------------------------
@@ -214,6 +224,8 @@ Partial Class Forms_MObjetos
         cboAdquisicion.DataValueField = "cod_cod"
         cboAdquisicion.DataTextField = "cod_val"
         cboAdquisicion.DataBind()
+        cboAdquisicion.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboAdquisicion.SelectedValue = "-1"
         dsAdquisicion.Dispose()
     End Sub
 
@@ -252,6 +264,8 @@ Partial Class Forms_MObjetos
         cboEstante.DataValueField = "cod_val"
         cboEstante.DataTextField = "cod_val"
         cboEstante.DataBind()
+        cboEstante.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboEstante.SelectedValue = "-1"
         dsEFC.Dispose()
 
         ' Fila
@@ -260,6 +274,8 @@ Partial Class Forms_MObjetos
         cboFila.DataValueField = "cod_val"
         cboFila.DataTextField = "cod_val"
         cboFila.DataBind()
+        cboFila.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboFila.SelectedValue = "-1"
         dsEFC.Dispose()
 
         ' Columna
@@ -268,6 +284,8 @@ Partial Class Forms_MObjetos
         cboColumna.DataValueField = "cod_val"
         cboColumna.DataTextField = "cod_val"
         cboColumna.DataBind()
+        cboColumna.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboColumna.SelectedValue = "-1"
         dsEFC.Dispose()
     End Sub
 
@@ -302,7 +320,10 @@ Partial Class Forms_MObjetos
 
     Protected Sub btnSave_Click(sender As Object, e As ImageClickEventArgs) Handles btnSave.Click
         DateTime.TryParseExact(txtRespFecha.Text, "dd-MM-yyyy", Nothing, Globalization.DateTimeStyles.None, dFechaResp)
-        If Functions.IdentityExist(txtNumInventario.Text, "obj_numero", "objetos") Then
+
+        Dim sID As String = IIf(txtID.Text = "Nuevo", 0, txtID.Text)
+
+        If Functions.IdentityExist(sID, "obj_id", txtNumInventario.Text, "obj_numero", "objetos") Then
             lblErrorMessages.Text = "El Número de Inventario existe. Favor ingrese un dato válido"
         Else
             Call SaveObjetos()

@@ -32,7 +32,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="adv_id" DataSourceID="dsAudiovisual" CellPadding="4" Width="536px" ForeColor="#333333" GridLines="None">
+                    <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="adv_id" DataSourceID="dsAudiovisual" CellPadding="4" Width="536px" ForeColor="#333333" GridLines="None" PageSize="30">
                         <AlternatingRowStyle BackColor="White" />
                         <Columns>
                             <asp:BoundField DataField="adv_id" Visible="False" />
@@ -51,7 +51,7 @@
                                     <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# Eval("adv_id", "MAudiovisual.aspx?ID={0}&Mode=View") %>' Text='<%# Eval("adv_titulo") %>'></asp:HyperLink>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField DataField="adv_numero" HeaderText="Código de Inventario" SortExpression="adv_numero" />
+                            <asp:BoundField DataField="adv_numero" HeaderText="Nro. de Inventario" SortExpression="adv_numero" />
                             <asp:BoundField DataField="adv_resp_nombre" HeaderText="Responsable" SortExpression="adv_resp_nombre" />
                             <asp:BoundField DataField="DELETE_" HeaderText="DELETE_" SortExpression="DELETE_" Visible="False" />
                             <asp:BoundField DataField="INSERT_" HeaderText="INSERT_" SortExpression="INSERT_" Visible="False" />

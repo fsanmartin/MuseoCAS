@@ -148,6 +148,8 @@ Partial Class Forms_MFotografias
         cboDeposito.DataValueField = "cod_cod"
         cboDeposito.DataTextField = "cod_val"
         cboDeposito.DataBind()
+        cboDeposito.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboDeposito.SelectedValue = "-1"
         dsDeposito.Dispose()
 
         ' -------------------------
@@ -157,6 +159,8 @@ Partial Class Forms_MFotografias
         cboTipoBien.DataValueField = "cod_cod"
         cboTipoBien.DataTextField = "cod_val"
         cboTipoBien.DataBind()
+        cboTipoBien.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboTipoBien.SelectedValue = "-1"
         dsTipoBien.Dispose()
 
         ' -------------------------
@@ -164,6 +168,8 @@ Partial Class Forms_MFotografias
         For i As Integer = Year(Date.Now) To 1709 Step -1
             cboAnio.Items.Add(New ListItem(i, i))
         Next i
+        cboAnio.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboAnio.SelectedValue = "-1"
 
         ' -------------------------
         ' Especialidad
@@ -172,6 +178,8 @@ Partial Class Forms_MFotografias
         cboEspecialidad.DataValueField = "cod_cod"
         cboEspecialidad.DataTextField = "cod_val"
         cboEspecialidad.DataBind()
+        cboEspecialidad.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboEspecialidad.SelectedValue = "-1"
         dsEspecialidad.Dispose()
 
         ' -------------------------
@@ -181,6 +189,8 @@ Partial Class Forms_MFotografias
         cboEstructura.DataValueField = "cod_cod"
         cboEstructura.DataTextField = "cod_val"
         cboEstructura.DataBind()
+        cboEstructura.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboEstructura.SelectedValue = "-1"
         dsEstructura.Dispose()
 
         ' -------------------------
@@ -190,6 +200,8 @@ Partial Class Forms_MFotografias
         cboTipoMaterial.DataValueField = "cod_cod"
         cboTipoMaterial.DataTextField = "cod_val"
         cboTipoMaterial.DataBind()
+        cboTipoMaterial.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboTipoMaterial.SelectedValue = "-1"
         dsTipoMaterial.Dispose()
 
         ' -------------------------
@@ -199,6 +211,8 @@ Partial Class Forms_MFotografias
         cboTono.DataValueField = "cod_cod"
         cboTono.DataTextField = "cod_val"
         cboTono.DataBind()
+        cboTono.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboTono.SelectedValue = "-1"
         dsTono.Dispose()
 
         ' -------------------------
@@ -208,6 +222,8 @@ Partial Class Forms_MFotografias
         cboSoporteImagen.DataValueField = "cod_cod"
         cboSoporteImagen.DataTextField = "cod_val"
         cboSoporteImagen.DataBind()
+        cboSoporteImagen.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboSoporteImagen.SelectedValue = "-1"
         dsSoporte.Dispose()
 
         ' -------------------------
@@ -217,6 +233,8 @@ Partial Class Forms_MFotografias
         cboConservacion.DataValueField = "cod_cod"
         cboConservacion.DataTextField = "cod_val"
         cboConservacion.DataBind()
+        cboConservacion.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboConservacion.SelectedValue = "-1"
         dsConservacion.Dispose()
 
         ' -------------------------
@@ -226,6 +244,8 @@ Partial Class Forms_MFotografias
         cboAdquisicion.DataValueField = "cod_cod"
         cboAdquisicion.DataTextField = "cod_val"
         cboAdquisicion.DataBind()
+        cboAdquisicion.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboAdquisicion.SelectedValue = "-1"
         dsAdquisicion.Dispose()
     End Sub
 
@@ -264,6 +284,8 @@ Partial Class Forms_MFotografias
         cboEstante.DataValueField = "cod_val"
         cboEstante.DataTextField = "cod_val"
         cboEstante.DataBind()
+        cboEstante.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboEstante.SelectedValue = "-1"
         dsEFC.Dispose()
 
         ' Fila
@@ -272,6 +294,8 @@ Partial Class Forms_MFotografias
         cboFila.DataValueField = "cod_val"
         cboFila.DataTextField = "cod_val"
         cboFila.DataBind()
+        cboFila.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboFila.SelectedValue = "-1"
         dsEFC.Dispose()
 
         ' Columna
@@ -280,6 +304,8 @@ Partial Class Forms_MFotografias
         cboColumna.DataValueField = "cod_val"
         cboColumna.DataTextField = "cod_val"
         cboColumna.DataBind()
+        cboColumna.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboColumna.SelectedValue = "-1"
         dsEFC.Dispose()
     End Sub
 
@@ -314,7 +340,10 @@ Partial Class Forms_MFotografias
 
     Protected Sub btnSave_Click(sender As Object, e As ImageClickEventArgs) Handles btnSave.Click
         DateTime.TryParseExact(txtRespFecha.Text, "dd-MM-yyyy", Nothing, Globalization.DateTimeStyles.None, dFechaResp)
-        If Functions.IdentityExist(txtNumInventario.Text, "fot_numero", "fotografia") Then
+
+        Dim sID As String = IIf(txtID.Text = "Nuevo", 0, txtID.Text)
+
+        If Functions.IdentityExist(sID, "fot_id", txtNumInventario.Text, "fot_numero", "fotografia") Then
             lblErrorMessages.Text = "El Número de Inventario existe. Favor ingrese un dato válido"
         Else
             Call SaveFotografias()

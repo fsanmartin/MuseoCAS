@@ -138,7 +138,7 @@ Partial Class Forms_MAudiovisual
 
     Private Sub LoadLists()
         'Dim sQueryDeposito As String = "SELECT dep_id, dep_name FROM deposito WHERE DELETE_ <> '*'"
-        Dim sQueryCodigos As String = "SELECT cod_cod, cod_val FROM codigos WHERE cod_name = '%COD_NAME%' AND DELETE_ <> '*'"
+        Dim sQueryCodigos As String = "SELECT cod_cod, cod_val FROM codigos WHERE cod_name = '%COD_NAME%' AND DELETE_ <> '*' ORDER BY cod_val"
         ' -------------------------
         ' Depóstio
         Dim dsDeposito As New SqlDataSource(sCN, Replace(sQueryCodigos, "%COD_NAME%", "_DEPOSITO"))
@@ -147,6 +147,8 @@ Partial Class Forms_MAudiovisual
         cboDeposito.DataValueField = "cod_cod"
         cboDeposito.DataTextField = "cod_val"
         cboDeposito.DataBind()
+        cboDeposito.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboDeposito.SelectedValue = "-1"
         dsDeposito.Dispose()
 
         ' -------------------------
@@ -156,15 +158,19 @@ Partial Class Forms_MAudiovisual
         cboTipoBien.DataValueField = "cod_cod"
         cboTipoBien.DataTextField = "cod_val"
         cboTipoBien.DataBind()
+        cboTipoBien.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboTipoBien.SelectedValue = "-1"
         dsTipoBien.Dispose()
 
         ' -------------------------
         ' Denominación Objeto
-        Dim dsDenomiacion As New SqlDataSource(sCN, Replace(sQueryCodigos, "%COD_NAME%", "_DENOMINACION_OBJETO"))
+        Dim dsDenomiacion As New SqlDataSource(sCN, Replace(sQueryCodigos, "%COD_NAME%", "_DENOMINA_OBJ_DOC"))
         cboDenominacion.DataSource = dsDenomiacion
         cboDenominacion.DataValueField = "cod_cod"
         cboDenominacion.DataTextField = "cod_val"
         cboDenominacion.DataBind()
+        cboDenominacion.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboDenominacion.SelectedValue = "-1"
         dsDenomiacion.Dispose()
 
         ' -------------------------
@@ -174,6 +180,8 @@ Partial Class Forms_MAudiovisual
         cboMateria.DataValueField = "cod_cod"
         cboMateria.DataTextField = "cod_val"
         cboMateria.DataBind()
+        cboMateria.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboMateria.SelectedValue = "-1"
         dsMateria.Dispose()
 
         ' -------------------------
@@ -183,6 +191,8 @@ Partial Class Forms_MAudiovisual
         cboTipoContenido.DataValueField = "cod_cod"
         cboTipoContenido.DataTextField = "cod_val"
         cboTipoContenido.DataBind()
+        cboTipoContenido.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboTipoContenido.SelectedValue = "-1"
         dsContenido.Dispose()
 
         ' -------------------------
@@ -192,6 +202,8 @@ Partial Class Forms_MAudiovisual
         cboIdiomas.DataValueField = "cod_cod"
         cboIdiomas.DataTextField = "cod_val"
         cboIdiomas.DataBind()
+        cboIdiomas.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboIdiomas.SelectedValue = "-1"
         dsIdiomas.Dispose()
 
         ' -------------------------
@@ -199,6 +211,8 @@ Partial Class Forms_MAudiovisual
         For i As Integer = Year(Date.Now) To 1709 Step -1
             cboAnio.Items.Add(New ListItem(i, i))
         Next i
+        cboAnio.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboAnio.SelectedValue = "-1"
 
         ' -------------------------
         ' Paises
@@ -207,6 +221,8 @@ Partial Class Forms_MAudiovisual
         cboPais.DataValueField = "cod_cod"
         cboPais.DataTextField = "cod_val"
         cboPais.DataBind()
+        cboPais.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboPais.SelectedValue = "-1"
         dsPaises.Dispose()
 
         ' -------------------------
@@ -216,6 +232,8 @@ Partial Class Forms_MAudiovisual
         cboTipoEncuadernacion.DataValueField = "cod_cod"
         cboTipoEncuadernacion.DataTextField = "cod_val"
         cboTipoEncuadernacion.DataBind()
+        cboTipoEncuadernacion.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboTipoEncuadernacion.SelectedValue = "-1"
         dsEncuadernacion.Dispose()
 
         ' -------------------------
@@ -225,6 +243,8 @@ Partial Class Forms_MAudiovisual
         cboTipoImpresion.DataValueField = "cod_cod"
         cboTipoImpresion.DataTextField = "cod_val"
         cboTipoImpresion.DataBind()
+        cboTipoImpresion.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboTipoImpresion.SelectedValue = "-1"
         dsImpresion.Dispose()
 
         ' -------------------------
@@ -234,6 +254,8 @@ Partial Class Forms_MAudiovisual
         cboConservacion.DataValueField = "cod_cod"
         cboConservacion.DataTextField = "cod_val"
         cboConservacion.DataBind()
+        cboConservacion.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboConservacion.SelectedValue = "-1"
         dsConservacion.Dispose()
 
         ' -------------------------
@@ -243,6 +265,8 @@ Partial Class Forms_MAudiovisual
         cboAdquisicion.DataValueField = "cod_cod"
         cboAdquisicion.DataTextField = "cod_val"
         cboAdquisicion.DataBind()
+        cboAdquisicion.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboAdquisicion.SelectedValue = "-1"
         dsAdquisicion.Dispose()
     End Sub
 
@@ -281,6 +305,8 @@ Partial Class Forms_MAudiovisual
         cboEstante.DataValueField = "cod_val"
         cboEstante.DataTextField = "cod_val"
         cboEstante.DataBind()
+        cboEstante.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboEstante.SelectedValue = "-1"
         dsEFC.Dispose()
 
         ' Fila
@@ -289,6 +315,8 @@ Partial Class Forms_MAudiovisual
         cboFila.DataValueField = "cod_val"
         cboFila.DataTextField = "cod_val"
         cboFila.DataBind()
+        cboFila.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboFila.SelectedValue = "-1"
         dsEFC.Dispose()
 
         ' Columna
@@ -297,6 +325,8 @@ Partial Class Forms_MAudiovisual
         cboColumna.DataValueField = "cod_val"
         cboColumna.DataTextField = "cod_val"
         cboColumna.DataBind()
+        cboColumna.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboColumna.SelectedValue = "-1"
         dsEFC.Dispose()
     End Sub
 
@@ -331,7 +361,10 @@ Partial Class Forms_MAudiovisual
 
     Protected Sub btnSave_Click(sender As Object, e As ImageClickEventArgs) Handles btnSave.Click
         DateTime.TryParseExact(txtRespFecha.Text, "dd-MM-yyyy", Nothing, Globalization.DateTimeStyles.None, dFechaResp)
-        If Functions.IdentityExist(txtNumInventario.Text, "doc_numero", "documentos") Then
+
+        Dim sID As String = IIf(txtID.Text = "Nuevo", 0, txtID.Text)
+
+        If Functions.IdentityExist(sID, "doc_id", txtNumInventario.Text, "doc_numero", "documentos") Then
             lblErrorMessages.Text = "El Número de Inventario existe. Favor ingrese un dato válido"
         Else
             Call SaveDocumentos()
