@@ -103,6 +103,7 @@ Partial Class Forms_MObjetos
             cboTipoBien.SelectedValue = dsObjetos("obj_tipo_bien_cod")
             cboDenominacion.SelectedValue = dsObjetos("obj_denominacion_cod")
             txtTitulo.Text = Trim(dsObjetos("obj_titulo"))
+            cboPeriodoEpoca.SelectedValue = dsObjetos("obj_periodo_epoca_cod")
             txtAutor.Text = Trim(dsObjetos("obj_autor_creador"))
             txtAno.Text = Trim(dsObjetos("obj_anio"))
             cboMes.SelectedValue = dsObjetos("obj_mes")
@@ -186,6 +187,17 @@ Partial Class Forms_MObjetos
         cboTipoBien.Items.Add(New ListItem("-- ninguno --", "-1"))
         cboTipoBien.SelectedValue = "-1"
         dsTipoBien.Dispose()
+
+        ' -------------------------
+        ' Periodo Epoca
+        Dim dsPeriodo As New SqlDataSource(sCN, Replace(sQueryCodigos, "%COD_NAME%", "_PERIODO_EPOCA"))
+        cboPeriodoEpoca.DataSource = dsPeriodo
+        cboPeriodoEpoca.DataValueField = "cod_cod"
+        cboPeriodoEpoca.DataTextField = "cod_val"
+        cboPeriodoEpoca.DataBind()
+        cboPeriodoEpoca.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboPeriodoEpoca.SelectedValue = "-1"
+        dsPeriodo.Dispose()
 
         ' -------------------------
         ' Denominación Objeto
@@ -383,6 +395,7 @@ Partial Class Forms_MObjetos
                            ",obj_tipo_bien_cod " & _
                            ",obj_denominacion_cod " & _
                            ",obj_titulo " & _
+                           ",obj_periodo_epoca_cod " & _
                            ",obj_autor_creador " & _
                            ",obj_anio " & _
                            ",obj_mes " & _
@@ -412,6 +425,7 @@ Partial Class Forms_MObjetos
                         "'" & cboTipoBien.SelectedValue & "', " & _
                         "'" & cboDenominacion.SelectedValue & "', " & _
                         "'" & Trim(txtTitulo.Text) & "', " & _
+                        "'" & cboPeriodoEpoca.SelectedValue & "', " & _
                         "'" & Trim(txtAutor.Text) & "', " & _
                         "'" & Trim(txtAno.Text) & "', " & _
                         "'" & Trim(cboMes.SelectedValue) & "', " & _
@@ -444,6 +458,7 @@ Partial Class Forms_MObjetos
                "   ,obj_tipo_bien_cod = '" & cboTipoBien.SelectedValue & "'" & _
                "   ,obj_denominacion_cod = '" & cboDenominacion.SelectedValue & "'" & _
                "   ,obj_titulo = '" & Trim(txtTitulo.Text) & "'" & _
+               "   ,obj_periodo_epoca_cod = '" & cboPeriodoEpoca.SelectedValue & "'" & _
                "   ,obj_autor_creador = '" & Trim(txtAutor.Text) & "'" & _
                "   ,obj_anio = '" & Trim(txtAno.Text) & "'" & _
                "   ,obj_mes = '" & cboMes.SelectedValue & "'" & _

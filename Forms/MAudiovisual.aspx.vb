@@ -176,11 +176,19 @@ Partial Class Forms_MAudiovisual
 
         ' -------------------------
         ' Décadas
-        For i As Integer = ((CInt(Year(Date.Now) / 10) * 10) + 9) To 1709 Step -10
-            cboDecada.Items.Add(New ListItem(CStr(i - 10) & "-" & CStr(i), CStr(i - 10) & "-" & CStr(i)))
-        Next i
+        'For i As Integer = ((CInt(Year(Date.Now) / 10) * 10) + 9) To 1709 Step -10
+        '    cboDecada.Items.Add(New ListItem(CStr(i - 10) & "-" & CStr(i), CStr(i - 10) & "-" & CStr(i)))
+        'Next i
+        'cboDecada.Items.Add(New ListItem("-- ninguno --", "-1"))
+        'cboDecada.SelectedValue = "-1"
+        Dim dsDecada As New SqlDataSource(sCN, Replace(sQueryCodigos, "%COD_NAME%", "_DECADA_AUD"))
+        cboDecada.DataSource = dsDecada
+        cboDecada.DataValueField = "cod_cod"
+        cboDecada.DataTextField = "cod_val"
+        cboDecada.DataBind()
         cboDecada.Items.Add(New ListItem("-- ninguno --", "-1"))
         cboDecada.SelectedValue = "-1"
+        dsDecada.Dispose()
 
         ' -------------------------
         ' Estado Conservación

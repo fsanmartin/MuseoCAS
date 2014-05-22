@@ -102,8 +102,11 @@ Partial Class Forms_MFotografias
 
             cboTipoBien.SelectedValue = dsFotografias("fot_tipo_bien_cod")
             txtTitulo.Text = Trim(dsFotografias("fot_titulo"))
+            cboPeriodoEpoca.SelectedValue = dsFotografias("fot_periodo_epoca_cod")
             txtAutor.Text = Trim(dsFotografias("fot_autor_creador"))
-            cboAnio.SelectedValue = dsFotografias("fot_anio")
+            txtAno.Text = Trim(dsFotografias("fot_anio"))
+            cboMes.SelectedValue = dsFotografias("fot_mes")
+            txtDia.Text = Trim(dsFotografias("fot_dia"))
             txtLugar.Text = Trim(dsFotografias("fot_lugar"))
             txtFondo.Text = Trim(dsFotografias("fot_fondo"))
             txtFechaEntrada.Text = Trim(dsFotografias("fot_fecha_entrada"))
@@ -164,12 +167,23 @@ Partial Class Forms_MFotografias
         dsTipoBien.Dispose()
 
         ' -------------------------
+        ' Periodo Epoca
+        Dim dsPeriodo As New SqlDataSource(sCN, Replace(sQueryCodigos, "%COD_NAME%", "_PERIODO_EPOCA"))
+        cboPeriodoEpoca.DataSource = dsPeriodo
+        cboPeriodoEpoca.DataValueField = "cod_cod"
+        cboPeriodoEpoca.DataTextField = "cod_val"
+        cboPeriodoEpoca.DataBind()
+        cboPeriodoEpoca.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboPeriodoEpoca.SelectedValue = "-1"
+        dsPeriodo.Dispose()
+
+        ' -------------------------
         ' Año
-        For i As Integer = Year(Date.Now) To 1709 Step -1
-            cboAnio.Items.Add(New ListItem(i, i))
-        Next i
-        cboAnio.Items.Add(New ListItem("-- ninguno --", "-1"))
-        cboAnio.SelectedValue = "-1"
+        ''For i As Integer = Year(Date.Now) To 1709 Step -1
+        ''    cboAnio.Items.Add(New ListItem(i, i))
+        ''Next i
+        ''cboAnio.Items.Add(New ListItem("-- ninguno --", "-1"))
+        ''cboAnio.SelectedValue = "-1"
 
         ' -------------------------
         ' Especialidad
@@ -402,8 +416,11 @@ Partial Class Forms_MFotografias
                            ",fot_fila " & _
                            ",fot_tipo_bien_cod " & _
                            ",fot_titulo " & _
+                           ",fot_periodo_epoca_cod " & _
                            ",fot_autor_creador " & _
                            ",fot_anio " & _
+                           ",fot_mes " & _
+                           ",fot_dia " & _
                            ",fot_lugar " & _
                            ",fot_fondo " & _
                            ",fot_fecha_entrada " & _
@@ -434,8 +451,11 @@ Partial Class Forms_MFotografias
                         "'" & cboFila.SelectedValue & "', " & _
                         "'" & cboTipoBien.SelectedValue & "', " & _
                         "'" & Trim(txtTitulo.Text) & "', " & _
+                        "'" & cboPeriodoEpoca.SelectedValue & "', " & _
                         "'" & Trim(txtAutor.Text) & "', " & _
-                        "'" & Trim(cboAnio.SelectedValue) & "', " & _
+                        "'" & Trim(txtAno.Text) & "', " & _
+                        "'" & Trim(cboMes.SelectedValue) & "', " & _
+                        "'" & Trim(txtDia.Text) & "', " & _
                         "'" & Trim(txtLugar.Text) & "', " & _
                         "'" & Trim(txtFondo.Text) & "', " & _
                         "'" & Trim(txtFechaEntrada.Text) & "', " & _
@@ -469,8 +489,11 @@ Partial Class Forms_MFotografias
                "   ,fot_fila = '" & cboFila.SelectedValue & "'" & _
                "   ,fot_tipo_bien_cod = '" & cboTipoBien.SelectedValue & "'" & _
                "   ,fot_titulo = '" & Trim(txtTitulo.Text) & "'" & _
+               "   ,fot_periodo_epoca_cod = '" & cboPeriodoEpoca.SelectedValue & "'" & _
                "   ,fot_autor_creador = '" & Trim(txtAutor.Text) & "'" & _
-               "   ,fot_anio = '" & Trim(cboAnio.SelectedValue) & "'" & _
+               "   ,fot_anio = '" & Trim(txtAno.Text) & "'" & _
+               "   ,fot_mes = '" & cboMes.SelectedValue & "'" & _
+               "   ,fot_dia = '" & Trim(txtDia.Text) & "'" & _
                "   ,fot_lugar = '" & Trim(txtLugar.Text) & "'" & _
                "   ,fot_fondo = '" & Trim(txtFondo.Text) & "'" & _
                "   ,fot_fecha_entrada = '" & Trim(txtFechaEntrada.Text) & "'" & _

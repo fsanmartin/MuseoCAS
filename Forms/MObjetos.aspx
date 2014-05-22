@@ -133,6 +133,15 @@
         </tr>
         <tr>
             <td colspan="2">
+                <asp:Label ID="lblDenominacion0" runat="server" Text="Período/Época:" CssClass="Labels"></asp:Label>
+            </td>
+            <td colspan="4">
+                <asp:DropDownList ID="cboPeriodoEpoca" runat="server" CssClass="textbox">
+                </asp:DropDownList>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
                 <asp:Label ID="lblAutor" runat="server" CssClass="Labels" Text="Autor/Creador:"></asp:Label>
             </td>
             <td colspan="4">

@@ -102,10 +102,12 @@ Partial Class Forms_MAudiovisual
             cboTipoBien.SelectedValue = dsDocumentos("doc_tipo_bien_cod")
             cboDenominacion.SelectedValue = dsDocumentos("doc_denominacion_cod")
             txtTitulo.Text = Trim(dsDocumentos("doc_titulo"))
+            cboPeriodoEpoca.SelectedValue = dsDocumentos("doc_periodo_epoca_cod")
             cboMateria.SelectedValue = dsDocumentos("doc_materia_cod")
             cboTipoContenido.SelectedValue = dsDocumentos("doc_tipo_cont_cod")
             txtColeccion.Text = Trim(dsDocumentos("doc_coleccion"))
             cboIdiomas.SelectedValue = dsDocumentos("doc_idiomas_cod")
+            txtDescripcion.Text = Trim(dsDocumentos("doc_descripcion"))
             txtAutor.Text = Trim(dsDocumentos("doc_autor_creador"))
             txtEditorial.Text = Trim(dsDocumentos("doc_editorial"))
             cboAnio.SelectedValue = dsDocumentos("doc_anio")
@@ -123,7 +125,7 @@ Partial Class Forms_MAudiovisual
             txtProcedencia.Text = Trim(dsDocumentos("doc_procedencia"))
             txtFuncion.Text = Trim(dsDocumentos("doc_funcion"))
             txtInscripciones.Text = Trim(dsDocumentos("doc_inscripciones_marcas"))
-            txtDescripcion.Text = Trim(dsDocumentos("doc_descripcion_fisica"))
+            txtDescripcionFisica.Text = Trim(dsDocumentos("doc_descripcion_fisica"))
             txtObservaciones.Text = Trim(dsDocumentos("doc_observaciones"))
             cboAdquisicion.SelectedValue = dsDocumentos("doc_modo_adquisicion")
             txtPalabrasClaves.Text = Trim(dsDocumentos("doc_palabra_clave"))
@@ -172,6 +174,17 @@ Partial Class Forms_MAudiovisual
         cboDenominacion.Items.Add(New ListItem("-- ninguno --", "-1"))
         cboDenominacion.SelectedValue = "-1"
         dsDenomiacion.Dispose()
+
+        ' -------------------------
+        ' Periodo Epoca
+        Dim dsPeriodo As New SqlDataSource(sCN, Replace(sQueryCodigos, "%COD_NAME%", "_PERIODO_EPOCA"))
+        cboPeriodoEpoca.DataSource = dsPeriodo
+        cboPeriodoEpoca.DataValueField = "cod_cod"
+        cboPeriodoEpoca.DataTextField = "cod_val"
+        cboPeriodoEpoca.DataBind()
+        cboPeriodoEpoca.Items.Add(New ListItem("-- ninguno --", "-1"))
+        cboPeriodoEpoca.SelectedValue = "-1"
+        dsPeriodo.Dispose()
 
         ' -------------------------
         ' Materia
@@ -386,10 +399,12 @@ Partial Class Forms_MAudiovisual
                            ",doc_tipo_bien_cod " & _
                            ",doc_denominacion_cod " & _
                            ",doc_titulo " & _
+                           ",doc_periodo_epoca_cod " & _
                            ",doc_materia_cod " & _
                            ",doc_tipo_cont_cod " & _
                            ",doc_coleccion " & _
                            ",doc_idiomas_cod " & _
+                           ",doc_descripcion " & _
                            ",doc_autor_creador " & _
                            ",doc_editorial " & _
                            ",doc_anio " & _
@@ -422,10 +437,12 @@ Partial Class Forms_MAudiovisual
                         "'" & cboTipoBien.SelectedValue & "', " & _
                         "'" & cboDenominacion.SelectedValue & "', " & _
                         "'" & Trim(txtTitulo.Text) & "', " & _
+                        "'" & cboPeriodoEpoca.SelectedValue & "', " & _
                         "'" & cboMateria.SelectedValue & "', " & _
                         "'" & cboTipoContenido.SelectedValue & "', " & _
                         "'" & Trim(txtColeccion.Text) & "', " & _
                         "'" & cboIdiomas.SelectedValue & "', " & _
+                        "'" & Trim(txtDescripcion.Text) & "', " & _
                         "'" & Trim(txtAutor.Text) & "', " & _
                         "'" & Trim(txtEditorial.Text) & "', " & _
                         "'" & cboAnio.SelectedValue & "', " & _
@@ -440,7 +457,7 @@ Partial Class Forms_MAudiovisual
                         "'" & Trim(txtProcedencia.Text) & "', " & _
                         "'" & Trim(txtFuncion.Text) & "', " & _
                         "'" & Trim(txtInscripciones.Text) & "', " & _
-                        "'" & Trim(txtDescripcion.Text) & "', " & _
+                        "'" & Trim(txtDescripcionFisica.Text) & "', " & _
                         "'" & Trim(txtObservaciones.Text) & "', " & _
                         "'" & Trim(cboAdquisicion.SelectedValue) & "', " & _
                         "'" & Trim(txtRespNombre.Text) & "', " & _
@@ -461,10 +478,12 @@ Partial Class Forms_MAudiovisual
                "   ,doc_tipo_bien_cod = '" & cboTipoBien.SelectedValue & "'" & _
                "   ,doc_denominacion_cod = '" & cboDenominacion.SelectedValue & "'" & _
                "   ,doc_titulo = '" & Trim(txtTitulo.Text) & "'" & _
+               "   ,doc_periodo_epoca_cod = '" & cboPeriodoEpoca.SelectedValue & "'" & _
                "   ,doc_materia_cod = '" & cboMateria.SelectedValue & "'" & _
                "   ,doc_tipo_cont_cod = '" & cboTipoContenido.SelectedValue & "'" & _
                "   ,doc_coleccion = '" & Trim(txtColeccion.Text) & "'" & _
                "   ,doc_idiomas_cod = '" & cboIdiomas.SelectedValue & "'" & _
+               "   ,doc_descripcion = '" & Trim(txtDescripcion.Text) & "'" & _
                "   ,doc_autor_creador = '" & Trim(txtAutor.Text) & "'" & _
                "   ,doc_editorial = '" & Trim(txtEditorial.Text) & "'" & _
                "   ,doc_anio = '" & cboAnio.SelectedValue & "'" & _
@@ -479,7 +498,7 @@ Partial Class Forms_MAudiovisual
                "   ,doc_procedencia = '" & Trim(txtProcedencia.Text) & "'" & _
                "   ,doc_funcion = '" & Trim(txtFuncion.Text) & "'" & _
                "   ,doc_inscripciones_marcas = '" & Trim(txtInscripciones.Text) & "'" & _
-               "   ,doc_descripcion_fisica = '" & Trim(txtDescripcion.Text) & "'" & _
+               "   ,doc_descripcion_fisica = '" & Trim(txtDescripcionFisica.Text) & "'" & _
                "   ,doc_observaciones = '" & Trim(txtObservaciones.Text) & "'" & _
                "   ,doc_modo_adquisicion = '" & cboAdquisicion.SelectedValue & "'" & _
                "   ,doc_palabra_clave = '" & Trim(txtPalabrasClaves.Text) & "'" & _

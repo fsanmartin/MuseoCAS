@@ -129,6 +129,15 @@
         </tr>
         <tr>
             <td colspan="2">
+                <asp:Label ID="lblDenominacion0" runat="server" Text="Período/Época:" CssClass="Labels"></asp:Label>
+            </td>
+            <td colspan="4">
+                <asp:DropDownList ID="cboPeriodoEpoca" runat="server" CssClass="textbox">
+                </asp:DropDownList>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
                 <asp:Label ID="lblAutor" runat="server" CssClass="Labels" Text="Autor:"></asp:Label>
             </td>
             <td colspan="4">
@@ -137,11 +146,26 @@
         </tr>
         <tr>
             <td colspan="2">
-                <asp:Label ID="lblTema7" runat="server" CssClass="Labels" Text="Año:"></asp:Label>
+                <asp:Label ID="lblTema7" runat="server" CssClass="Labels" Text="Año (día/mes/año):"></asp:Label>
             </td>
             <td colspan="4">
-                <asp:DropDownList ID="cboAnio" runat="server" CssClass="textbox">
+                <asp:TextBox ID="txtDia" runat="server" CssClass="textbox" MaxLength="2" Width="18px"></asp:TextBox>
+                /<asp:DropDownList ID="cboMes" runat="server" CssClass="textbox">
+                    <asp:ListItem Value="">-- ninguno --</asp:ListItem>
+                    <asp:ListItem Value="01">Enero</asp:ListItem>
+                    <asp:ListItem Value="02">Febrero</asp:ListItem>
+                    <asp:ListItem Value="03">Marzo</asp:ListItem>
+                    <asp:ListItem Value="04">Abril</asp:ListItem>
+                    <asp:ListItem Value="05">Mayo</asp:ListItem>
+                    <asp:ListItem Value="06">Junio</asp:ListItem>
+                    <asp:ListItem Value="07">Julio</asp:ListItem>
+                    <asp:ListItem Value="08">Agosto</asp:ListItem>
+                    <asp:ListItem Value="09">Septiembre</asp:ListItem>
+                    <asp:ListItem Value="10">Octubre</asp:ListItem>
+                    <asp:ListItem Value="11">Noviembre</asp:ListItem>
+                    <asp:ListItem Value="12">Diciembre</asp:ListItem>
                 </asp:DropDownList>
+                /<asp:TextBox ID="txtAno" runat="server" CssClass="textbox" MaxLength="4" Width="34px"></asp:TextBox>
             </td>
         </tr>
         <tr>

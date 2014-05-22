@@ -132,6 +132,15 @@
             </td>
         </tr>
         <tr>
+            <td colspan="2">
+                <asp:Label ID="lblDenominacion0" runat="server" Text="Período/Época:" CssClass="Labels"></asp:Label>
+            </td>
+            <td colspan="4">
+                <asp:DropDownList ID="cboPeriodoEpoca" runat="server" CssClass="textbox">
+                </asp:DropDownList>
+            </td>
+        </tr>
+        <tr>
             <td colspan="2" rowspan="4">
                 <asp:Label ID="lblTema" runat="server" CssClass="Labels" Text="Tema:"></asp:Label>
             </td>
@@ -167,6 +176,14 @@
             <td colspan="2">
                 <asp:DropDownList ID="cboIdiomas" runat="server" CssClass="textbox">
                 </asp:DropDownList>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <asp:Label ID="lblDescripcion0" runat="server" CssClass="Labels" Text="Descripción:"></asp:Label>
+            </td>
+            <td colspan="4">
+                <asp:TextBox ID="txtDescripcion" runat="server" CssClass="textbox" Height="70px" TextMode="MultiLine" Width="350px"></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -294,7 +311,7 @@
                 <asp:Label ID="lblDescripcion" runat="server" CssClass="Labels" Text="Descripción física:"></asp:Label>
             </td>
             <td colspan="4">
-                <asp:TextBox ID="txtDescripcion" runat="server" CssClass="textbox" Height="70px" TextMode="MultiLine" Width="350px"></asp:TextBox>
+                <asp:TextBox ID="txtDescripcionFisica" runat="server" CssClass="textbox" Height="70px" TextMode="MultiLine" Width="350px"></asp:TextBox>
             </td>
         </tr>
         <tr>
