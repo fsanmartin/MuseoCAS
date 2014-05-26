@@ -245,6 +245,15 @@
             </td>
         </tr>
         <tr>
+            <td colspan="2">
+                <asp:Label ID="lblTema11" runat="server" CssClass="Labels" Text="Material:"></asp:Label>
+            </td>
+            <td colspan="4">
+                <asp:CheckBoxList ID="cblMaterial" runat="server" CssClass="textbox">
+                </asp:CheckBoxList>
+            </td>
+        </tr>
+        <tr>
             <td rowspan="3" colspan="2">
                 <asp:Label ID="lblDimensiones" runat="server" CssClass="Labels" Text="Dimensiones:"></asp:Label>
             </td>

@@ -74,6 +74,7 @@ Partial Class Forms_MObjetos
 
     Private Sub LoadValues(ByVal ID As String)
         Dim sQuery As String = "SELECT * FROM Objetos WHERE obj_id = " & ID & " AND DELETE_ <> '*'"
+        Dim sQueryMaterial As String = "SELECT * FROM material WHERE mat_name = 'OBJETOS' AND mat_cod_name = '_MATERIAL_OBJ' AND mat_cat_id = " & ID
 
         ' Conexión SQL Server
         Dim cn As SqlConnection = New SqlConnection(sCN)
@@ -109,7 +110,7 @@ Partial Class Forms_MObjetos
             cboMes.SelectedValue = dsObjetos("obj_mes")
             txtDia.Text = dsObjetos("obj_dia")
             cboDecada.SelectedValue = Trim(dsObjetos("obj_decada"))
-            ' --------- MATERIAL TÉCNICA
+            txtTecnica.Text = Trim(dsObjetos("obj_tecnica"))
             Dim dimCont As String() = Split(dsObjetos("obj_dimensiones"), "/")
             txtContAlto.Text = dimCont(0)
             txtContAncho.Text = dimCont(1)
@@ -130,6 +131,23 @@ Partial Class Forms_MObjetos
 
             'Call LoadImages(txtID.Text, "OBJETOS")
         End While
+
+        dsObjetos.Close()
+
+        ' --------- MATERIAL
+        cmd = New SqlCommand(sQueryMaterial, cn)
+        Dim dsMaterial As SqlDataReader
+        dsMaterial = cmd.ExecuteReader
+
+        While dsMaterial.Read
+            For Each itemMat As ListItem In cblMaterial.Items
+                If dsMaterial("mat_cod_cod") = itemMat.Value Then
+                    itemMat.Selected = True
+                End If
+            Next
+        End While
+        dsMaterial.Close()
+        ' ---------
 
         cn.Close()
     End Sub
@@ -217,6 +235,16 @@ Partial Class Forms_MObjetos
         Next i
         cboDecada.Items.Add(New ListItem("-- ninguno --", "-1"))
         cboDecada.SelectedValue = "-1"
+
+        ' -------------------------
+        ' Material CheckBoxList
+        Dim dsMaterial As New SqlDataSource(sCN, Replace(sQueryCodigos, "%COD_NAME%", "_MATERIAL_OBJ"))
+
+        cblMaterial.DataSource = dsMaterial
+        cblMaterial.DataValueField = "cod_cod"
+        cblMaterial.DataTextField = "cod_val"
+        cblMaterial.DataBind()
+        dsMaterial.Dispose()
 
         ' -------------------------
         ' Estado Conservación
@@ -401,6 +429,7 @@ Partial Class Forms_MObjetos
                            ",obj_mes " & _
                            ",obj_dia " & _
                            ",obj_decada " & _
+                           ",obj_tecnica " & _
                            ",obj_dimensiones " & _
                            ",obj_peso " & _
                            ",obj_estado_conservacion_cod " & _
@@ -431,6 +460,7 @@ Partial Class Forms_MObjetos
                         "'" & Trim(cboMes.SelectedValue) & "', " & _
                         "'" & Trim(txtDia.Text) & "', " & _
                         "'" & Trim(cboDecada.SelectedValue) & "', " & _
+                        "'" & Trim(txtTecnica.Text) & "', " & _
                         "'" & Trim(txtContAlto.Text) & "/" & Trim(txtContAncho.Text) & "/" & Trim(txtContProf.Text) & "', " & _
                         "'" & Trim(txtPeso.Text) & "', " & _
                         "'" & Trim(cboConservacion.SelectedValue) & "', " & _
@@ -464,6 +494,7 @@ Partial Class Forms_MObjetos
                "   ,obj_mes = '" & cboMes.SelectedValue & "'" & _
                "   ,obj_dia = '" & Trim(txtDia.Text) & "'" & _
                "   ,obj_decada = '" & cboDecada.SelectedValue & "'" & _
+               "   ,obj_tecnica = '" & Trim(txtTecnica.Text) & "'" & _
                "   ,obj_dimensiones = '" & Trim(txtContAlto.Text) & "/" & Trim(txtContAncho.Text) & "/" & Trim(txtContProf.Text) & "'" & _
                "   ,obj_peso = '" & Trim(txtPeso.Text) & "'" & _
                "   ,obj_estado_conservacion_cod = '" & cboConservacion.SelectedValue & "'" & _
@@ -480,6 +511,8 @@ Partial Class Forms_MObjetos
                "   ,USERID_ = '" & Trim(User.Identity.Name) & "' " & _
              "WHERE obj_id = " & txtID.Text
 
+        Dim sDeleteMaterial As String = "DELETE FROM material WHERE mat_name = 'OBJETOS' AND mat_cod_name = '_MATERIAL_OBJ' AND mat_cat_id = " & Trim(txtID.Text)
+
         ' Conexión SQL Server
         Dim cn As SqlConnection = New SqlConnection(sCN)
         Dim cmd As SqlCommand
@@ -491,9 +524,15 @@ Partial Class Forms_MObjetos
             iID = cmd.ExecuteScalar()
             txtID.Text = iID
         Else
+            ' Limpiar MATERIAL
+            cmd = New SqlCommand(sDeleteMaterial, cn)
+            cmd.ExecuteNonQuery()
+
             cmd = New SqlCommand(sUpdateObjetos, cn)
             cmd.ExecuteNonQuery()
         End If
+
+        Call Functions.SaveMaterial("OBJETOS", "_MATERIAL_OBJ", txtID.Text, cblMaterial)
 
         cn.Close()
     End Sub

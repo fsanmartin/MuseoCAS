@@ -184,10 +184,10 @@
         </tr>
         <tr>
             <td colspan="2">
-                <asp:Label ID="lblMaterialTecnica" runat="server" CssClass="Labels" Text="Material Técnica:"></asp:Label>
+                <asp:Label ID="lblMaterial" runat="server" CssClass="Labels" Text="Material:"></asp:Label>
             </td>
             <td colspan="4">
-                <asp:CheckBoxList ID="CheckBoxList1" runat="server">
+                <asp:CheckBoxList ID="cblMaterial" runat="server" CssClass="textbox">
                 </asp:CheckBoxList>
             </td>
         </tr>

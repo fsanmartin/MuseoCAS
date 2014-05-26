@@ -74,6 +74,7 @@ Partial Class Forms_MAudiovisual
 
     Private Sub LoadValues(ByVal ID As String)
         Dim sQuery As String = "SELECT * FROM audiovisual WHERE adv_id = " & ID & " AND DELETE_ <> '*'"
+        Dim sQueryMaterial As String = "SELECT * FROM material WHERE mat_name = 'AUDIOVISUAL' AND mat_cod_name = '_MATERIAL_AUD' AND mat_cat_id = " & ID
 
         ' Conexión SQL Server
         Dim cn As SqlConnection = New SqlConnection(sCN)
@@ -109,7 +110,6 @@ Partial Class Forms_MAudiovisual
             cboMes.SelectedValue = dsAudiovisual("adv_mes")
             txtDia.Text = dsAudiovisual("adv_dia")
             cboDecada.SelectedValue = Trim(dsAudiovisual("adv_decada"))
-            ' --------- MATERIAL TÉCNICA
             Dim dimCont As String() = Split(dsAudiovisual("adv_dimensiones_contenedor"), "/")
             txtContAlto.Text = dimCont(0)
             txtContAncho.Text = dimCont(1)
@@ -133,6 +133,23 @@ Partial Class Forms_MAudiovisual
             txtDigitador.Text = Trim(dsAudiovisual("USERID_"))
             txtDigFecha.Text = Trim(dsAudiovisual("UPDATE_"))
         End While
+
+        dsAudiovisual.Close()
+
+        ' --------- MATERIAL
+        cmd = New SqlCommand(sQueryMaterial, cn)
+        Dim dsMaterial As SqlDataReader
+        dsMaterial = cmd.ExecuteReader
+
+        While dsMaterial.Read
+            For Each itemMat As ListItem In cblMaterial.Items
+                If dsMaterial("mat_cod_cod") = itemMat.Value Then
+                    itemMat.Selected = True
+                End If
+            Next
+        End While
+        dsMaterial.Close()
+        ' ---------
 
         cn.Close()
     End Sub
@@ -189,6 +206,16 @@ Partial Class Forms_MAudiovisual
         cboDecada.Items.Add(New ListItem("-- ninguno --", "-1"))
         cboDecada.SelectedValue = "-1"
         dsDecada.Dispose()
+
+        ' -------------------------
+        ' Material CheckBoxList
+        Dim dsMaterial As New SqlDataSource(sCN, Replace(sQueryCodigos, "%COD_NAME%", "_MATERIAL_AUD"))
+
+        cblMaterial.DataSource = dsMaterial
+        cblMaterial.DataValueField = "cod_cod"
+        cblMaterial.DataTextField = "cod_val"
+        cblMaterial.DataBind()
+        dsMaterial.Dispose()
 
         ' -------------------------
         ' Estado Conservación
@@ -456,6 +483,8 @@ Partial Class Forms_MAudiovisual
                "   ,USERID_ = '" & Trim(User.Identity.Name) & "' " & _
              "WHERE adv_id = " & txtID.Text
 
+        Dim sDeleteMaterial As String = "DELETE FROM material WHERE mat_name = 'AUDIOVISUAL' AND mat_cod_name = '_MATERIAL_AUD' AND mat_cat_id = " & Trim(txtID.Text)
+
         ' Conexión SQL Server
         Dim cn As SqlConnection = New SqlConnection(sCN)
         Dim cmd As SqlCommand
@@ -467,9 +496,15 @@ Partial Class Forms_MAudiovisual
             iID = cmd.ExecuteScalar()
             txtID.Text = iID
         Else
+            ' Limpiar MATERIAL
+            cmd = New SqlCommand(sDeleteMaterial, cn)
+            cmd.ExecuteNonQuery()
+
             cmd = New SqlCommand(sUpdateAudiovisual, cn)
             cmd.ExecuteNonQuery()
         End If
+
+        Call Functions.SaveMaterial("AUDIOVISUAL", "_MATERIAL_AUD", txtID.Text, cblMaterial)
 
         cn.Close()
     End Sub

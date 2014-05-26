@@ -183,11 +183,19 @@
         </tr>
         <tr>
             <td colspan="2">
-                <asp:Label ID="lblMaterialTecnica" runat="server" CssClass="Labels" Text="Material Técnica:"></asp:Label>
+                <asp:Label ID="lblMaterialTecnica" runat="server" CssClass="Labels" Text="Material:"></asp:Label>
             </td>
             <td colspan="4">
-                <asp:CheckBoxList ID="CheckBoxList1" runat="server">
+                <asp:CheckBoxList ID="cblMaterial" runat="server">
                 </asp:CheckBoxList>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <asp:Label ID="Label1" runat="server" CssClass="Labels" Text="Técnica:"></asp:Label>
+            </td>
+            <td colspan="4">
+                <asp:TextBox ID="txtTecnica" runat="server" CssClass="textbox" MaxLength="200" Width="350px" TextMode="MultiLine"></asp:TextBox>
             </td>
         </tr>
         <tr>

@@ -171,6 +171,7 @@ Public Class Functions
             ElseIf (ctrl.GetType() Is GetType(CheckBoxList)) Then
                 Dim cbo As CheckBoxList = CType(ctrl, CheckBoxList)
                 cbo.Enabled = False
+                cbo.CssClass = "read_only"
             ElseIf (ctrl.GetType() Is GetType(Label)) Then
                 Dim lbl As Label = CType(ctrl, Label)
                 If lbl.Text = "*" Then lbl.Visible = False
@@ -250,4 +251,32 @@ Public Class Functions
 
         Return bReturn
     End Function
+
+    Public Shared Sub SaveMaterial(MaterialName As String, CodName As String, CatID As Integer, cblMaterial As CheckBoxList)
+        Dim sInsertMaterial As String = _
+                    "INSERT INTO material " & _
+                           "(mat_name " & _
+                           ",mat_cat_id " & _
+                           ",mat_cod_name " & _
+                           ",mat_cod_cod) " & _
+                    " VALUES( '" & Trim(MaterialName) & "', " & CatID & ", '" & Trim(CodName) & "', "
+
+        ' Conexión SQL Server
+        Dim sCN As String = ConfigurationManager.ConnectionStrings("ColegioCN").ConnectionString
+        Dim cn As SqlConnection = New SqlConnection(sCN)
+        Dim cmd As SqlCommand
+
+        cn.Open()
+
+        For Each itemMat As ListItem In cblMaterial.Items
+            If itemMat.Selected Then
+                cmd = New SqlCommand(sInsertMaterial & "'" & itemMat.Value & "')", cn)
+                cmd.ExecuteNonQuery()
+            End If
+        Next
+
+        cn.Close()
+
+    End Sub
+
 End Class

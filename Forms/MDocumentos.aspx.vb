@@ -73,6 +73,7 @@ Partial Class Forms_MAudiovisual
 
     Private Sub LoadValues(ByVal ID As String)
         Dim sQuery As String = "SELECT * FROM documentos WHERE doc_id = " & ID & " AND DELETE_ <> '*'"
+        Dim sQueryMaterial As String = "SELECT * FROM material WHERE mat_name = 'AUDIOVISUAL' AND mat_cod_name = '_MATERIAL_DOC' AND mat_cat_id = " & ID
 
         ' Conexión SQL Server
         Dim cn As SqlConnection = New SqlConnection(sCN)
@@ -134,6 +135,24 @@ Partial Class Forms_MAudiovisual
             txtDigitador.Text = Trim(dsDocumentos("USERID_"))
             txtDigFecha.Text = Trim(dsDocumentos("UPDATE_"))
         End While
+
+        dsDocumentos.Close()
+
+        ' --------- MATERIAL
+        cmd = New SqlCommand(sQueryMaterial, cn)
+        Dim dsMaterial As SqlDataReader
+        dsMaterial = cmd.ExecuteReader
+
+        While dsMaterial.Read
+            For Each itemMat As ListItem In cblMaterial.Items
+                If dsMaterial("mat_cod_cod") = itemMat.Value Then
+                    itemMat.Selected = True
+                End If
+            Next
+        End While
+        dsMaterial.Close()
+        ' ---------
+
 
         cn.Close()
     End Sub
@@ -259,6 +278,15 @@ Partial Class Forms_MAudiovisual
         cboTipoImpresion.Items.Add(New ListItem("-- ninguno --", "-1"))
         cboTipoImpresion.SelectedValue = "-1"
         dsImpresion.Dispose()
+
+        ' -------------------------
+        ' Material CheckBoxList
+        Dim dsMaterial As New SqlDataSource(sCN, Replace(sQueryCodigos, "%COD_NAME%", "_MATERIAL_DOC"))
+        cblMaterial.DataSource = dsMaterial
+        cblMaterial.DataValueField = "cod_cod"
+        cblMaterial.DataTextField = "cod_val"
+        cblMaterial.DataBind()
+        dsMaterial.Dispose()
 
         ' -------------------------
         ' Estado Conservación
@@ -508,6 +536,8 @@ Partial Class Forms_MAudiovisual
                "   ,USERID_ = '" & Trim(User.Identity.Name) & "' " & _
              "WHERE doc_id = " & txtID.Text
 
+        Dim sDeleteMaterial As String = "DELETE FROM material WHERE mat_name = 'AUDIOVISUAL' AND mat_cod_name = '_MATERIAL_AUD' AND mat_cat_id = " & Trim(txtID.Text)
+
         ' Conexión SQL Server
         Dim cn As SqlConnection = New SqlConnection(sCN)
         Dim cmd As SqlCommand
@@ -519,9 +549,15 @@ Partial Class Forms_MAudiovisual
             iID = cmd.ExecuteScalar()
             txtID.Text = iID
         Else
+            ' Limpiar MATERIAL
+            cmd = New SqlCommand(sDeleteMaterial, cn)
+            cmd.ExecuteNonQuery()
+
             cmd = New SqlCommand(sUpdateDocumentos, cn)
             cmd.ExecuteNonQuery()
         End If
+
+        Call Functions.SaveMaterial("AUDIOVISUAL", "_MATERIAL_DOC", txtID.Text, cblMaterial)
 
         cn.Close()
     End Sub
