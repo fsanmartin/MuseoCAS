@@ -405,48 +405,14 @@
         </tr>
         <tr>
             <td colspan="6">
-                <table class="auto-style4">
-                    <%  Dim arImages As New ArrayList
-    Dim iPhoto As Integer = 1
-    Dim i As Integer
-    Dim iAlto As Integer
-    Dim iAncho As Integer
-    Dim iFactorAlto As Integer = 120
-    Dim sImg As String()
-    Dim imgImage As System.Drawing.Image
-    Dim sPath As String
-    
-    If txtID.Text <> "Nuevo" Then
-        arImages = Functions.LoadImages(Trim(txtID.Text), "FOTOGRAFIA")
-        If arImages.Count > 0 Then
-            For i = 0 To arImages.Count - 1
-                sImg = CType(arImages.Item(i), String())
-
-                sPath = System.Configuration.ConfigurationManager.AppSettings("site") & Replace(sImg(0), "~", "")
-                imgImage = System.Drawing.Image.FromFile(Server.MapPath(sPath))
-                
-                imgImage = System.Drawing.Image.FromFile(Server.MapPath(sImg(0)))
-                If imgImage.Width > imgImage.Height Then
-                    iAncho = CType(imgImage.Width / imgImage.Height * iFactorAlto, Integer)
-                    iAlto = iFactorAlto
-                Else
-                    iAlto = CType(imgImage.Height / imgImage.Width * iFactorAlto, Integer)
-                    iAncho = iFactorAlto
-                End If
-                
-                If iPhoto = 1 Then%>
-                    <tr>
-                        <%              End If%><%--                        <td><asp:Image runat="server" AlternateText="<%Response.Write(sImg(1))%>" ImageUrl="<%Response.Write(sImg(0))%>"/></td>--%>
-                        <td class="auto-style4">
-                            <img src="<%Response.Write(sPath)%>" alt="<%Response.Write(sImg(0))%>" width="<%Response.Write(iAncho)%>" height="<%Response.Write(iAlto)%>" />
-                            <table><tr><td><%Response.Write(sImg(1))%></td></tr></table>
-                        </td>
-                        <%              If iPhoto = 3 Then%>
-                    </tr>
-                    <%                  iPhoto = 0 %><%              End If%><%              iPhoto = iPhoto + 1
-            Next i
-        End If%><%  End If%>
-                </table>
+                <asp:ScriptManager ID="ScriptManager1" runat="server">
+                </asp:ScriptManager>
+                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                <ContentTemplate>
+                    <asp:Panel ID="panImagesTable" runat="server">
+                    </asp:Panel>
+                </ContentTemplate>
+                </asp:UpdatePanel>
             </td>
 
         </tr>

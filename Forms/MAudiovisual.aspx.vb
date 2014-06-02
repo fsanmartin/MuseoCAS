@@ -24,6 +24,7 @@ Partial Class Forms_MAudiovisual
         End If
 
         If Request.QueryString.Get("ID") IsNot Nothing Then
+            Call LoadImagesTable("AUDIOVISUAL", Request.QueryString.Get("ID"), panImagesTable)
             If Not bPostBack Then
                 Call LoadValues(Request.QueryString.Get("ID"))
 
@@ -318,6 +319,9 @@ Partial Class Forms_MAudiovisual
 
         cn.Close()
 
+        ' Eliminar imágenes de la galería
+        Call Functions.DeleteGallery("AUDIOVISUAL", txtID.Text)
+
         Response.Redirect("VWAudiovisual.aspx")
     End Sub
 
@@ -374,6 +378,7 @@ Partial Class Forms_MAudiovisual
                 Functions.AddImageGallery("AUDIOVISUAL", CInt(txtID.Text), IIf(txtImageTitle.Text.Trim <> "", txtImageTitle.Text, sName), sNewName)
 
                 lblErrUpload.Text = "Archivo cargado correctamente."
+                txtImageTitle.Text = ""
             Else
                 lblErrUpload.Text = "El archivo no es de tipo imagen."
             End If
@@ -505,7 +510,139 @@ Partial Class Forms_MAudiovisual
         End If
 
         Call Functions.SaveMaterial("AUDIOVISUAL", "_MATERIAL_AUD", txtID.Text, cblMaterial)
+        Call Functions.SaveImagesTitle(panImagesTable)
 
         cn.Close()
     End Sub
+
+    Private Sub LoadImagesTable(ByVal Gallery As String, ByVal ID As String, ByVal PanelDynamics As Panel)
+        ' Variables Galería
+        Dim arImages As New ArrayList
+        Dim iPhoto As Integer = 1
+        Dim i As Integer
+        Dim iAlto As Integer
+        Dim iAncho As Integer
+        Dim iFactorAlto As Integer = 120
+        Dim sImg As String()
+        Dim imgImage As System.Drawing.Image
+        Dim sPath As String
+
+        ' Manejo de Tabla de Imágenes
+        Dim table As New Table
+        Dim tr As TableRow
+        Dim td As TableCell
+        Dim img As HtmlImage
+
+        ' Manejo de tabla de controles de cada imagen
+        Dim tableINT As Table
+        Dim trINT As TableRow
+        Dim tdINT As TableCell
+        Dim txt As TextBox
+        Dim btn As Button
+        Dim lt As Literal
+
+        table.CssClass = "auto-style4"
+
+        If ID <> "Nuevo" Then
+            arImages = Functions.LoadImages(Trim(ID), Trim(Gallery))
+            If arImages.Count > 0 Then
+                For i = 0 To arImages.Count - 1
+                    sImg = CType(arImages.Item(i), String())
+                    sPath = System.Configuration.ConfigurationManager.AppSettings("site") & Replace(sImg(0), "~", "")
+                    imgImage = System.Drawing.Image.FromFile(Server.MapPath(sPath))
+
+                    If imgImage.Width > imgImage.Height Then
+                        iAncho = CType(imgImage.Width / imgImage.Height * iFactorAlto, Integer)
+                        iAlto = iFactorAlto
+                    Else
+                        iAlto = CType(imgImage.Height / imgImage.Width * iFactorAlto, Integer)
+                        iAncho = iFactorAlto
+                    End If
+
+                    If iPhoto = 1 Then
+                        ' Nueva Fila
+                        tr = New TableRow
+                    End If
+
+                    ' Nueva celda
+                    td = New TableCell
+                    td.CssClass = "auto-style4"
+
+                    ' Control de Imagen
+                    img = New HtmlImage
+                    img.Src = sPath
+                    img.Alt = sImg(0)
+                    img.Width = iAncho
+                    img.Height = iAlto
+
+                    ' Controles internos de cada imagen
+                    tableINT = New Table
+                    trINT = New TableRow
+                    tdINT = New TableCell
+                    txt = New TextBox
+                    btn = New Button
+                    AddHandler btn.Click, AddressOf btnDynamics_Click
+
+                    tableINT.CssClass = "auto-style4"
+                    tdINT.CssClass = "auto-style4"
+
+                    ' Título de la Imagen
+                    txt.ID = "txtImageGallery_" & sImg(2)
+                    txt.MaxLength = 200
+                    txt.Width = iFactorAlto
+                    txt.Text = sImg(1)
+                    txt.CssClass = "textbox"
+
+                    ' Botón para eliminar la imagen
+                    btn.ID = "btnDeleteImage_" & sImg(2)
+                    btn.Text = "Eliminar"
+                    btn.OnClientClick = "return confirm('¿Esta seguro de eliminar esta imagen?');"
+
+                    ' Agregar Controles
+                    tdINT.Controls.Add(txt)
+                    lt = New Literal
+                    lt.Text = "<br />"
+                    tdINT.Controls.Add(lt)
+                    tdINT.Controls.Add(btn)
+
+                    trINT.Controls.Add(tdINT)
+                    tableINT.Controls.Add(trINT)
+
+                    ' Insertar imagen con vínculo
+                    lt = New Literal
+                    lt.Text = "<a target=""_blank"" href=""" & sPath & """>"
+                    td.Controls.Add(lt)
+                    td.Controls.Add(img)
+                    lt = New Literal
+                    lt.Text = "</a>"
+                    td.Controls.Add(lt)
+
+                    td.Controls.Add(tableINT)
+                    tr.Controls.Add(td)
+                    table.Controls.Add(tr)
+
+                    If iPhoto = 3 Then iPhoto = 0
+                    iPhoto = iPhoto + 1
+                Next i
+            End If
+        End If
+
+        PanelDynamics.Controls.Add(table)
+
+    End Sub
+
+    Protected Sub btnDynamics_Click(sender As Object, e As EventArgs)
+        Dim btn As Button = CType(sender, Button)
+        Dim sNameControl As String() = Split(btn.ID, "_")
+        Dim txt As TextBox = CType(panImagesTable.FindControl("txtImageGallery_" & sNameControl(1)), TextBox)
+
+        ' Eliminar Imagen seleccionada
+        Call Functions.DeleteImageGallery(sNameControl(1))
+        btn.Text = "Imagen eliminada"
+        btn.Enabled = False
+        btn.CssClass = "button_disabled"
+        txt.Enabled = False
+        txt.CssClass = "read_only"
+    End Sub
+
 End Class

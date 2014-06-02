@@ -28,6 +28,65 @@ Public Class Functions
         cn.Close()
     End Sub
 
+    Public Shared Sub UpdateImageGallery(ByVal PhotoID As Integer, ByVal Name As String)
+        Dim sCN As String = ConfigurationManager.ConnectionStrings("ColegioCN").ConnectionString
+        Dim sUpdateGallery As String = _
+            "UPDATE galeria " & _
+            " SET img_nombre = '" & Trim(Name) & "' " & _
+            "WHERE img_id = " & PhotoID
+
+        ' Conexión SQL Server
+        Dim cn As SqlConnection = New SqlConnection(sCN)
+        Dim cmd As SqlCommand
+
+        cn.Open()
+
+        cmd = New SqlCommand(sUpdateGallery, cn)
+        cmd.ExecuteNonQuery()
+
+        cmd.Dispose()
+        cn.Close()
+    End Sub
+
+    Public Shared Sub DeleteImageGallery(ByVal PhotoID As Integer)
+        Dim sCN As String = ConfigurationManager.ConnectionStrings("ColegioCN").ConnectionString
+        Dim sDeleteGallery As String = _
+            "DELETE FROM galeria " & _
+            "WHERE img_id = " & PhotoID
+
+        ' Conexión SQL Server
+        Dim cn As SqlConnection = New SqlConnection(sCN)
+        Dim cmd As SqlCommand
+
+        cn.Open()
+
+        cmd = New SqlCommand(sDeleteGallery, cn)
+        cmd.ExecuteNonQuery()
+
+        cmd.Dispose()
+        cn.Close()
+    End Sub
+
+    Public Shared Sub DeleteGallery(ByVal Gallery As String, ByVal CatID As Integer)
+        Dim sCN As String = ConfigurationManager.ConnectionStrings("ColegioCN").ConnectionString
+        Dim sDeleteGallery As String = _
+            "DELETE FROM galeria " & _
+            "WHERE img_galeria = '" & Trim(Gallery) & "' " & _
+            "  AND img_cat_id = " & CatID
+
+        ' Conexión SQL Server
+        Dim cn As SqlConnection = New SqlConnection(sCN)
+        Dim cmd As SqlCommand
+
+        cn.Open()
+
+        cmd = New SqlCommand(sDeleteGallery, cn)
+        cmd.ExecuteNonQuery()
+
+        cmd.Dispose()
+        cn.Close()
+    End Sub
+
     Public Shared Sub DeleteReg(Tablename As String, FieldID As String, ID As Integer, Username As String)
         Dim sCN As String = ConfigurationManager.ConnectionStrings("ColegioCN").ConnectionString
         Dim sDelete As String =
@@ -106,7 +165,7 @@ Public Class Functions
             ReDim sOption(3)
             sOption(0) = Trim(dsMenu("cat_title"))
             sOption(1) = Trim(dsMenu("men_title"))
-            sOption(2) = Trim(dsMenu("func_url"))
+            sOption(2) = Trim(System.Configuration.ConfigurationManager.AppSettings("site")) & Trim(dsMenu("func_url"))
             sOption(3) = Trim(dsMenu("func_program"))
             arMenu.Add(sOption)
         End While
@@ -210,6 +269,7 @@ Public Class Functions
             ReDim sImage(2)
             sImage(0) = dsImages("img_url")
             sImage(1) = dsImages("img_nombre")
+            sImage(2) = dsImages("img_id")
             arImagesOutput.Add(sImage)
         End While
 
@@ -228,7 +288,7 @@ Public Class Functions
         Dim sQuery As String = "SELECT COUNT(*) AS existe " & _
                                "FROM " & sTable & " " & _
                                "WHERE " & sKeyFieldName & " = '" & sKey & "' " & _
-                               "  AND " & sIDFieldName & " <> " & sID & _
+                               "  AND " & sIDFieldName & " <> " & Val(sID) & _
                                "  AND DELETE_ <> '*'"
 
         ' Conexión SQL Server
@@ -279,4 +339,18 @@ Public Class Functions
 
     End Sub
 
+    Public Shared Sub SaveImagesTitle(ByVal CtrlCont As Control)
+        For Each ctrl In CtrlCont.Controls
+            If (ctrl.GetType() Is GetType(TextBox)) Then
+                Dim txt As TextBox = CType(ctrl, TextBox)
+                If txt.ID.Contains("txtImageGallery") Then
+                    Dim sName As String() = Split(txt.ID, "_")
+                    Call Functions.UpdateImageGallery(sName(1), txt.Text)
+                End If
+            End If
+            If ctrl.HasControls Then
+                Call SaveImagesTitle(ctrl)
+            End If
+        Next
+    End Sub
 End Class

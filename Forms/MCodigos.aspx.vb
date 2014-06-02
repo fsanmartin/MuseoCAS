@@ -73,7 +73,7 @@ Partial Class Forms_MCodigos
     End Sub
 
     Private Sub LoadValues(ByVal ID As String)
-        Dim sQuery As String = "SELECT * FROM codigos WHERE cod_id = " & ID & " AND DELETE_ <> '*'"
+        Dim sQuery As String = "SELECT * FROM codigos WHERE cod_id = " & ID & " AND DELETE_ <> '*' ORDER BY cod_val"
 
         ' Conexión SQL Server
         Dim cn As SqlConnection = New SqlConnection(sCN)
@@ -97,7 +97,7 @@ Partial Class Forms_MCodigos
     End Sub
 
     Private Sub LoadLists()
-        Dim sQueryCodigos As String = "SELECT rtrim(cod_cod) as cod_cod, rtrim(cod_val) as cod_val FROM codigos WHERE cod_name = '%COD_NAME%' AND DELETE_ <> '*'"
+        Dim sQueryCodigos As String = "SELECT rtrim(cod_cod) as cod_cod, rtrim(cod_val) as cod_val FROM codigos WHERE cod_name = '%COD_NAME%' AND DELETE_ <> '*' ORDER BY cod_val"
         ' -------------------------
         ' Maestro de Tablas de Códigos
         Dim dsTabla As New SqlDataSource(sCN, Replace(sQueryCodigos, "%COD_NAME%", "__TABLES"))
