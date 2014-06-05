@@ -139,6 +139,8 @@ Partial Class Forms_MFotografias
         End While
 
         cn.Close()
+
+        Call Functions.ResizeTextbox(Page)
     End Sub
 
     Private Sub LoadLists()

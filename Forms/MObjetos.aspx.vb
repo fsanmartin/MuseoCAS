@@ -109,7 +109,6 @@ Partial Class Forms_MObjetos
             txtAno.Text = Trim(dsObjetos("obj_anio"))
             cboMes.SelectedValue = dsObjetos("obj_mes")
             txtDia.Text = dsObjetos("obj_dia")
-            cboDecada.SelectedValue = Trim(dsObjetos("obj_decada"))
             txtTecnica.Text = Trim(dsObjetos("obj_tecnica"))
             Dim dimCont As String() = Split(dsObjetos("obj_dimensiones"), "/")
             txtContAlto.Text = dimCont(0)
@@ -150,6 +149,8 @@ Partial Class Forms_MObjetos
         ' ---------
 
         cn.Close()
+
+        Call Functions.ResizeTextbox(Page)
     End Sub
 
     'Private Sub LoadImages(sID As String, Gallery As String)
@@ -227,14 +228,6 @@ Partial Class Forms_MObjetos
         cboDenominacion.Items.Add(New ListItem("-- ninguno --", "-1"))
         cboDenominacion.SelectedValue = "-1"
         dsDenomiacion.Dispose()
-
-        ' -------------------------
-        ' Décadas
-        For i As Integer = ((CInt(Year(Date.Now) / 10) * 10) + 9) To 1709 Step -10
-            cboDecada.Items.Add(New ListItem(CStr(i - 10) & "-" & CStr(i), CStr(i - 10) & "-" & CStr(i)))
-        Next i
-        cboDecada.Items.Add(New ListItem("-- ninguno --", "-1"))
-        cboDecada.SelectedValue = "-1"
 
         ' -------------------------
         ' Material CheckBoxList
@@ -463,7 +456,7 @@ Partial Class Forms_MObjetos
                         "'" & Trim(txtAno.Text) & "', " & _
                         "'" & Trim(cboMes.SelectedValue) & "', " & _
                         "'" & Trim(txtDia.Text) & "', " & _
-                        "'" & Trim(cboDecada.SelectedValue) & "', " & _
+                        "' ', " & _
                         "'" & Trim(txtTecnica.Text) & "', " & _
                         "'" & Trim(txtContAlto.Text) & "/" & Trim(txtContAncho.Text) & "/" & Trim(txtContProf.Text) & "', " & _
                         "'" & Trim(txtPeso.Text) & "', " & _
@@ -497,7 +490,7 @@ Partial Class Forms_MObjetos
                "   ,obj_anio = '" & Trim(txtAno.Text) & "'" & _
                "   ,obj_mes = '" & cboMes.SelectedValue & "'" & _
                "   ,obj_dia = '" & Trim(txtDia.Text) & "'" & _
-               "   ,obj_decada = '" & cboDecada.SelectedValue & "'" & _
+               "   ,obj_decada = ' '" & _
                "   ,obj_tecnica = '" & Trim(txtTecnica.Text) & "'" & _
                "   ,obj_dimensiones = '" & Trim(txtContAlto.Text) & "/" & Trim(txtContAncho.Text) & "/" & Trim(txtContProf.Text) & "'" & _
                "   ,obj_peso = '" & Trim(txtPeso.Text) & "'" & _

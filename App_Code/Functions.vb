@@ -353,4 +353,24 @@ Public Class Functions
             End If
         Next
     End Sub
+
+    Public Shared Sub ResizeTextbox(ByVal CtrlCont As Control)
+        Dim iLen As Integer
+        Dim iHeight As Integer
+        For Each ctrl In CtrlCont.Controls
+            If (ctrl.GetType() Is GetType(TextBox)) Then
+                Dim txt As TextBox = CType(ctrl, TextBox)
+                If txt.TextMode = TextBoxMode.MultiLine Then
+                    iLen = Len(txt.Text)
+                    If iLen > 150 Then
+                        iHeight = (iLen / 4.5) + 2
+                        txt.Height = Unit.Pixel(iHeight)
+                    End If
+                End If
+            End If
+            If ctrl.HasControls Then
+                Call ResizeTextbox(ctrl)
+            End If
+        Next
+    End Sub
 End Class

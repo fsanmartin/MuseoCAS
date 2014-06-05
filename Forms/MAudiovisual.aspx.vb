@@ -153,6 +153,8 @@ Partial Class Forms_MAudiovisual
         ' ---------
 
         cn.Close()
+
+        Call Functions.ResizeTextbox(Page)
     End Sub
 
     Private Sub LoadLists()

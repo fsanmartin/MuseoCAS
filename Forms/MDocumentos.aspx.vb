@@ -154,8 +154,9 @@ Partial Class Forms_MAudiovisual
         dsMaterial.Close()
         ' ---------
 
-
         cn.Close()
+
+        Call Functions.ResizeTextbox(Page)
     End Sub
 
     Private Sub LoadLists()

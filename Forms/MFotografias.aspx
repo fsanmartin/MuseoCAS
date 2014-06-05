@@ -49,7 +49,7 @@
     </script> 
 
     <h1>
-                <a href="VWAudiovisual.aspx"><img alt="Volver" class="auto-style3" src="../Icons/return_32.png" /></a>&nbsp; Ficha para Registro de Fotografías</h1>
+                <a href="VWFotografia.aspx"><img alt="Volver" class="auto-style3" src="../Icons/return_32.png" /></a>&nbsp; Ficha para Registro de Fotografías</h1>
     <table id="tblAdministracion">
         <tr>
             <td colspan="6" style="text-align: right">

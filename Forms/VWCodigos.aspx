@@ -21,7 +21,7 @@
                 <asp:Label ID="Label1" runat="server" CssClass="Labels" Text="Tabla:"></asp:Label>
             </td>
             <td>
-                <asp:DropDownList ID="cboCodigo" runat="server" AutoPostBack="True" CssClass="textbox" DataSourceID="SqlDataSource1" DataTextField="cod_cod" DataValueField="cod_cod" Height="16px" Width="171px">
+                <asp:DropDownList ID="cboCodigo" runat="server" AutoPostBack="True" CssClass="textbox" DataSourceID="SqlDataSource1" DataTextField="cod_val" DataValueField="cod_cod" Height="16px" Width="171px">
                 </asp:DropDownList>
             </td>
         </tr>
@@ -92,7 +92,7 @@
     </asp:SqlDataSource>
     <br />
     <br />
-    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ColegioCN %>" SelectCommand="SELECT DISTINCT [cod_cod] FROM [CODIGOS] WHERE (([DELETE_] &lt;&gt; @DELETE_) AND ([cod_name] = @cod_name)) ORDER BY [cod_cod]">
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ColegioCN %>" SelectCommand="SELECT DISTINCT [cod_cod], [cod_val] FROM [CODIGOS] WHERE (([DELETE_] &lt;&gt; @DELETE_) AND ([cod_name] = @cod_name)) ORDER BY [cod_cod]">
         <SelectParameters>
             <asp:Parameter DefaultValue="*" Name="DELETE_" Type="String" />
             <asp:Parameter DefaultValue="__TABLES" Name="cod_name" Type="String" />

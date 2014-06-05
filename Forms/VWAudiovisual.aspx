@@ -46,12 +46,16 @@
                                     <asp:ImageButton ID="btnImage" runat="server" CausesValidation="false" CommandName="btnImage" ImageUrl="~/Icons/photo.png" Text="Imagen" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Título" SortExpression="adv_titulo">
+                            <asp:TemplateField HeaderText="N° Inventario" SortExpression="adv_numero">
                                 <ItemTemplate>
-                                    <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# Eval("adv_id", "MAudiovisual.aspx?ID={0}&Mode=View") %>' Text='<%# Eval("adv_titulo") %>'></asp:HyperLink>
+                                    <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# Eval("adv_id", "MAudiovisual.aspx?ID={0}&Mode=View") %>' Text='<%# Eval("adv_numero")%>'></asp:HyperLink>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField DataField="adv_numero" HeaderText="Nro. de Inventario" SortExpression="adv_numero" />
+                            <asp:TemplateField HeaderText="Título" SortExpression="adv_titulo">
+                                <ItemTemplate>
+                                    <asp:Label ID="Label1" runat="server" Text='<%# Bind("adv_titulo")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:BoundField DataField="adv_resp_nombre" HeaderText="Responsable" SortExpression="adv_resp_nombre" />
                             <asp:BoundField DataField="DELETE_" HeaderText="DELETE_" SortExpression="DELETE_" Visible="False" />
                             <asp:BoundField DataField="INSERT_" HeaderText="INSERT_" SortExpression="INSERT_" Visible="False" />

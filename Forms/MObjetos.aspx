@@ -163,15 +163,6 @@
         </tr>
         <tr>
             <td colspan="2">
-                <asp:Label ID="lblDecada" runat="server" CssClass="Labels" Text="Década:"></asp:Label>
-            </td>
-            <td colspan="4">
-                <asp:DropDownList ID="cboDecada" runat="server" CssClass="textbox">
-                </asp:DropDownList>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
                 <asp:Label ID="lblMaterialTecnica" runat="server" CssClass="Labels" Text="Material:"></asp:Label>
             </td>
             <td colspan="4">

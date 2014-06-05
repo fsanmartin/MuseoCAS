@@ -46,12 +46,16 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:BoundField DataField="doc_id" HeaderText="doc_id" InsertVisible="False" ReadOnly="True" SortExpression="doc_id" Visible="False" />
-                            <asp:TemplateField HeaderText="Título" SortExpression="doc_titulo">
+                            <asp:TemplateField HeaderText="N° Inventario" SortExpression="doc_numero">
                                 <ItemTemplate>
-                                    <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# Eval("doc_id", "MDocumentos.aspx?ID={0}&Mode=View")%>' Text='<%# Eval("doc_titulo") %>'></asp:HyperLink>
+                                    <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# Eval("doc_id", "MDocumentos.aspx?ID={0}&Mode=View")%>' Text='<%# Eval("doc_numero")%>'></asp:HyperLink>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField DataField="doc_numero" HeaderText="Nro. de Inventario" SortExpression="doc_numero" />
+                            <asp:TemplateField HeaderText="Título" SortExpression="doc_titulo">
+                                <ItemTemplate>
+                                    <asp:Label ID="Label1" runat="server" Text='<%# Bind("doc_titulo")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:BoundField DataField="doc_resp_nombre" HeaderText="Responsable" SortExpression="doc_resp_nombre" />
                             <asp:TemplateField ShowHeader="False">
                                 <ItemTemplate>
